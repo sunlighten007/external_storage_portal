@@ -41,3 +41,4 @@ postgres_data/
 .env*.local
 test-results/
 playwright-report/
+.env.production

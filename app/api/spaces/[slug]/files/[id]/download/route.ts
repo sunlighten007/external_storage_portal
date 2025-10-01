@@ -15,7 +15,8 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
     
-    const { slug: spaceSlug, id } = await params;
+    const { slug, id } = await params;
+    const spaceSlug = slug;
     const uploadId = parseInt(id);
     
     if (isNaN(uploadId)) {
