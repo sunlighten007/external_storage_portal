@@ -9,9 +9,9 @@ import { Button } from '@/components/ui/button';
 import { Upload, FileText, Users, Calendar, Download } from 'lucide-react';
 
 interface SpacePageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 async function SpaceDashboard({ slug }: { slug: string }) {
@@ -25,7 +25,7 @@ async function SpaceDashboard({ slug }: { slug: string }) {
     notFound();
   }
 
-  const hasAccess = await userHasSpaceAccess(session.user.id, space.id);
+  const hasAccess = await userHasSpaceAccess(session.user.id, slug);
   if (!hasAccess) {
     redirect('/spaces');
   }
@@ -172,7 +172,9 @@ async function SpaceDashboard({ slug }: { slug: string }) {
   );
 }
 
-export default function SpacePage({ params }: SpacePageProps) {
+export default async function SpacePage({ params }: SpacePageProps) {
+  const { slug } = await params;
+  
   return (
     <div className="container mx-auto py-8 px-4">
       <Suspense fallback={
@@ -180,7 +182,7 @@ export default function SpacePage({ params }: SpacePageProps) {
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
         </div>
       }>
-        <SpaceDashboard slug={params.slug} />
+        <SpaceDashboard slug={slug} />
       </Suspense>
     </div>
   );

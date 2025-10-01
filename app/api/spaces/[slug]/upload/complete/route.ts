@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth/session';
-import { createUpload, getSpaceBySlug, userHasSpaceAccess } from '@/lib/db/queries/spaces';
+import { getSpaceBySlug, userHasSpaceAccess } from '@/lib/db/queries/spaces';
+import { createUpload } from '@/lib/db/queries/uploads';
 import { checkFileExists, getFileMetadata, verifyS3KeyBelongsToSpace } from '@/lib/s3/client';
 import { uploadCompleteSchema } from '@/lib/validations/upload';
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
     // Verify authentication
@@ -15,7 +16,7 @@ export async function POST(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
     
-    const spaceSlug = params.slug;
+    const { slug: spaceSlug } = await params;
     
     // Verify space exists
     const space = await getSpaceBySlug(spaceSlug);
@@ -25,7 +26,7 @@ export async function POST(
     
     // Verify user has access
     const hasAccess = await userHasSpaceAccess(
-      parseInt(session.user.id), 
+      session.user.id, 
       spaceSlug
     );
     if (!hasAccess) {

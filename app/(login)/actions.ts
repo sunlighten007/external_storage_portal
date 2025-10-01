@@ -90,6 +90,7 @@ export const signIn = validatedAction(signInSchema, async (data, formData) => {
     logActivity(foundTeam?.id, foundUser.id, ActivityType.SIGN_IN)
   ]);
 
+  // Use redirect from next/navigation for server actions
   redirect('/dashboard');
 });
 
@@ -201,9 +202,11 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
 
   await Promise.all([
     db.insert(teamMembers).values(newTeamMember),
-    logActivity(teamId, createdUser.id, ActivityType.SIGN_UP),
-    setSession(createdUser)
+    logActivity(teamId, createdUser.id, ActivityType.SIGN_UP)
   ]);
+  
+  // Set session after user is created and has an ID
+  await setSession(createdUser);
 
   redirect('/dashboard');
 });

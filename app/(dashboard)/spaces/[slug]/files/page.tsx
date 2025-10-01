@@ -8,15 +8,16 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowLeft, Upload, Search, Download, Trash2, FileText, Calendar, User } from 'lucide-react';
+import DownloadButton from './download-button';
 
 interface FilesPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
-  searchParams: {
+  }>;
+  searchParams: Promise<{
     page?: string;
     search?: string;
-  };
+  }>;
 }
 
 async function FilesList({ slug, searchParams }: { slug: string; searchParams: any }) {
@@ -30,7 +31,7 @@ async function FilesList({ slug, searchParams }: { slug: string; searchParams: a
     notFound();
   }
 
-  const hasAccess = await userHasSpaceAccess(session.user.id, space.id);
+  const hasAccess = await userHasSpaceAccess(session.user.id, slug);
   if (!hasAccess) {
     redirect('/spaces');
   }
@@ -148,10 +149,11 @@ async function FilesList({ slug, searchParams }: { slug: string; searchParams: a
                       </div>
                     </div>
                     <div className="flex space-x-1">
-                      <Button variant="outline" size="sm">
-                        <Download className="w-4 h-4 mr-1" />
-                        Download
-                      </Button>
+                      <DownloadButton 
+                        fileId={file.id}
+                        filename={file.filename}
+                        spaceSlug={slug}
+                      />
                       <Button variant="outline" size="sm" className="text-red-600 hover:text-red-700">
                         <Trash2 className="w-4 h-4" />
                       </Button>
@@ -194,14 +196,17 @@ async function FilesList({ slug, searchParams }: { slug: string; searchParams: a
   );
 }
 
-export default function FilesPage({ params, searchParams }: FilesPageProps) {
+export default async function FilesPage({ params, searchParams }: FilesPageProps) {
+  const { slug } = await params;
+  const resolvedSearchParams = await searchParams;
+  
   return (
     <Suspense fallback={
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
       </div>
     }>
-      <FilesList slug={params.slug} searchParams={searchParams} />
+      <FilesList slug={slug} searchParams={resolvedSearchParams} />
     </Suspense>
   );
 }
