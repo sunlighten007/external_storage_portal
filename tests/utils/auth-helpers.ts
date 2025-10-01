@@ -17,11 +17,26 @@ export class AuthHelper {
     // Submit the form
     await this.page.click('button[type="submit"]');
     
-    // Wait for redirect to dashboard
-    await this.page.waitForURL('/dashboard');
+    // Wait for any navigation to complete
+    await this.page.waitForLoadState('networkidle', { timeout: 15000 });
+    
+    // Check what URL we ended up on
+    const currentUrl = this.page.url();
+    
+    // If we're still on sign-in page, there might be an error
+    if (currentUrl.includes('/sign-in')) {
+      const errorElement = this.page.locator('.text-red-500').first();
+      if (await errorElement.isVisible()) {
+        const errorText = await errorElement.textContent();
+        throw new Error(`Login failed: ${errorText}`);
+      }
+      
+      throw new Error('Login failed: Still on sign-in page after login attempt');
+    }
     
     // Verify we're logged in by checking for dashboard elements
-    await expect(this.page.locator('h1')).toContainText('Team Settings');
+    const h1Element = this.page.locator('h1');
+    await expect(h1Element).toContainText(/OTA Image Management|Dashboard/);
   }
 
   async logout() {
@@ -40,7 +55,7 @@ export class AuthHelper {
     try {
       // Check if we're on the dashboard or if user menu is visible
       const currentUrl = this.page.url();
-      return currentUrl.includes('/dashboard') || currentUrl.includes('/spaces');
+      return currentUrl.includes('/dashboard') || currentUrl.includes('/spaces') || currentUrl.includes('/upload') || currentUrl.includes('/files');
     } catch {
       return false;
     }
@@ -51,4 +66,10 @@ export class AuthHelper {
       await this.login(user);
     }
   }
+}
+
+// Standalone function for easy use in tests
+export async function loginUser(page: Page, user: TestUser = getTestUser()) {
+  const authHelper = new AuthHelper(page);
+  await authHelper.login(user);
 }

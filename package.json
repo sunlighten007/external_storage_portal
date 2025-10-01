@@ -13,7 +13,10 @@
     "test:ui": "playwright test --ui",
     "test:headed": "playwright test --headed",
     "test:debug": "playwright test --debug",
-    "test:report": "playwright show-report"
+    "test:report": "playwright show-report",
+    "test:files": "playwright test tests/file-upload-download.spec.ts",
+    "test:files:headed": "playwright test tests/file-upload-download.spec.ts --headed",
+    "test:files:debug": "playwright test tests/file-upload-download.spec.ts --debug"
   },
   "dependencies": {
     "@tailwindcss/postcss": "4.1.7",

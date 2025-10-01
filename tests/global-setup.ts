@@ -19,6 +19,9 @@ async function globalSetup(config: FullConfig) {
   process.env.S3_ENDPOINT = 'http://localhost:4566';
   process.env.USE_LOCAL_S3 = 'true';
   
+  // Ensure environment variables are available globally
+  global.process = global.process || process;
+  
   // Ensure database is clean and seeded with test data
   await setupTestDatabase();
   
@@ -64,12 +67,14 @@ async function setupTestDatabase() {
     const createdUsers = [];
     for (const userData of testUsers) {
       const passwordHash = await hashPassword(userData.password);
+      
       const [user] = await db.insert(users).values({
         email: userData.email,
         passwordHash,
         role: userData.role,
         name: userData.name
       }).returning();
+      
       createdUsers.push({ ...user, password: userData.password });
     }
     
@@ -143,7 +148,7 @@ async function verifyApplicationHealth() {
   
   try {
     // Try to access the application
-    const response = await page.goto('http://localhost:3002', { 
+    const response = await page.goto('http://localhost:3000', { 
       waitUntil: 'networkidle',
       timeout: 30000 
     });
@@ -152,8 +157,8 @@ async function verifyApplicationHealth() {
       throw new Error(`Application not responding: ${response?.status()}`);
     }
     
-    // Check if we can see the homepage elements
-    await page.waitForSelector('h1', { timeout: 10000 });
+    // Check if we can see the sign-in page elements (app redirects to sign-in)
+    await page.waitForSelector('h2:has-text("Sign in"), h1', { timeout: 10000 });
     
     console.log('✅ Application is healthy and responding');
     

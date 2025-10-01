@@ -51,22 +51,22 @@ export function getTestTeam(slug: string = 'blaupunkt'): TestTeam {
 
 export const TEST_FILE_DATA = {
   smallFile: {
-    name: 'test-small.txt',
-    content: 'This is a small test file for E2E testing.',
+    name: 'test-small.zip',
+    content: 'PK\x03\x04\x14\x00\x00\x00\x08\x00\x00\x00\x00\x00This is a small test file for E2E testing.',
     size: 50,
-    type: 'text/plain'
+    type: 'application/zip'
   },
   mediumFile: {
-    name: 'test-medium.txt',
-    content: 'A'.repeat(1024 * 100), // 100KB
+    name: 'test-medium.zip',
+    content: 'PK\x03\x04\x14\x00\x00\x00\x08\x00\x00\x00\x00\x00' + 'A'.repeat(1024 * 100), // 100KB
     size: 1024 * 100,
-    type: 'text/plain'
+    type: 'application/zip'
   },
   largeFile: {
-    name: 'test-large.txt',
-    content: 'A'.repeat(1024 * 1024), // 1MB
+    name: 'test-large.zip',
+    content: 'PK\x03\x04\x14\x00\x00\x00\x08\x00\x00\x00\x00\x00' + 'A'.repeat(1024 * 1024), // 1MB
     size: 1024 * 1024,
-    type: 'text/plain'
+    type: 'application/zip'
   }
 };
 
