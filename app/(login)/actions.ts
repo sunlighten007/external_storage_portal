@@ -174,8 +174,13 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
     }
   } else {
     // Create a new team if there's no invitation
+    const teamSlug = email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, '-');
+    const s3Prefix = `team-${teamSlug}-${Date.now()}`;
+    
     const newTeam: NewTeam = {
-      name: `${email}'s Team`
+      name: `${email}'s Team`,
+      slug: teamSlug,
+      s3Prefix: s3Prefix
     };
 
     [createdTeam] = await db.insert(teams).values(newTeam).returning();

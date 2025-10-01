@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
     }
     
     // Get user's spaces
-    const spaces = await getUserSpaces(parseInt(session.user.id));
+    const spaces = await getUserSpaces(session.user.id);
     
     return NextResponse.json({
       spaces: spaces.map(space => ({

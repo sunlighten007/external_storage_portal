@@ -71,7 +71,7 @@ export async function POST(
       description: validatedData.description || null,
       changelog: validatedData.changelog || null,
       version: validatedData.version || null,
-      uploadedBy: parseInt(session.user.id),
+      uploadedBy: session.user.id,
     });
     
     return NextResponse.json(

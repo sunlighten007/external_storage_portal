@@ -6,7 +6,7 @@ import { hasSpacePermission } from '@/lib/db/queries/spaceMembers';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { slug: string; id: string } }
+  { params }: { params: Promise<{ slug: string; id: string }> }
 ) {
   try {
     // Verify authentication
@@ -15,8 +15,9 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
     
-    const spaceSlug = params.slug;
-    const uploadId = parseInt(params.id);
+    const { slug, id } = await params;
+    const spaceSlug = slug;
+    const uploadId = parseInt(id);
     
     if (isNaN(uploadId)) {
       return NextResponse.json({ error: 'Invalid upload ID' }, { status: 400 });
@@ -30,7 +31,7 @@ export async function GET(
     
     // Verify user has access
     const hasAccess = await userHasSpaceAccess(
-      parseInt(session.user.id), 
+      session.user.id, 
       spaceSlug
     );
     if (!hasAccess) {
@@ -84,7 +85,7 @@ export async function GET(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { slug: string; id: string } }
+  { params }: { params: Promise<{ slug: string; id: string }> }
 ) {
   try {
     // Verify authentication
@@ -93,8 +94,9 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
     
-    const spaceSlug = params.slug;
-    const uploadId = parseInt(params.id);
+    const { slug, id } = await params;
+    const spaceSlug = slug;
+    const uploadId = parseInt(id);
     
     if (isNaN(uploadId)) {
       return NextResponse.json({ error: 'Invalid upload ID' }, { status: 400 });
@@ -108,7 +110,7 @@ export async function DELETE(
     
     // Verify user has access
     const hasAccess = await userHasSpaceAccess(
-      parseInt(session.user.id), 
+      session.user.id, 
       spaceSlug
     );
     if (!hasAccess) {
@@ -121,7 +123,7 @@ export async function DELETE(
     // Check delete permission
     const canDelete = await hasSpacePermission(
       space.id,
-      parseInt(session.user.id),
+      session.user.id,
       'delete'
     );
     if (!canDelete) {

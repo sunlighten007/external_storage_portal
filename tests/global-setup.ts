@@ -7,7 +7,8 @@ async function globalSetup(config: FullConfig) {
   console.log('🚀 Starting global test setup...');
   
   // Set up environment variables for tests
-  process.env.NODE_ENV = 'test';
+  // NODE_ENV is read-only, so we'll set it via global assignment
+  (global as any).process = global.process || process;
   process.env.DATABASE_URL = process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:54322/postgres';
   process.env.AUTH_SECRET = process.env.AUTH_SECRET || 'test-secret-key';
   
