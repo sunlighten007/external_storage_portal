@@ -7,15 +7,26 @@ export const uploadPresignSchema = z.object({
   filename: z.string()
     .min(1, 'Filename is required')
     .max(255, 'Filename too long')
-    .regex(/^[a-zA-Z0-9._-]+$/, 'Filename contains invalid characters'),
-  contentType: z.enum([
-    'application/zip',
-    'application/x-zip-compressed',
-    'application/octet-stream',
-    'application/x-gzip',
-    'application/x-tar',
-    'application/gzip',
-  ]),
+    .regex(/^[a-zA-Z0-9._\-\s]+$/, 'Filename contains invalid characters'),
+  contentType: z.string()
+    .min(1, 'Content type is required')
+    .refine((type) => {
+      const allowedTypes = [
+        'application/zip',
+        'application/x-zip-compressed',
+        'application/octet-stream',
+        'application/x-gzip',
+        'application/x-tar',
+        'application/gzip',
+        'application/x-7z-compressed',
+        'application/vnd.android.package-archive',
+        'application/x-iso9660-image',
+        'text/plain',
+        'image/jpeg',
+        'image/png'
+      ];
+      return allowedTypes.includes(type) || type.startsWith('application/');
+    }, 'Unsupported file type'),
   fileSize: z.number()
     .min(1, 'File size must be greater than 0')
     .max(5 * 1024 * 1024 * 1024, 'File size exceeds 5GB limit'),
@@ -38,15 +49,19 @@ export const uploadCompleteSchema = z.object({
   md5Hash: z.string()
     .length(32, 'MD5 hash must be 32 characters')
     .regex(/^[a-f0-9]+$/, 'Invalid MD5 hash format')
+    .nullable()
     .optional(),
   description: z.string()
     .max(1000, 'Description too long')
+    .nullable()
     .optional(),
   changelog: z.string()
     .max(5000, 'Changelog too long')
+    .nullable()
     .optional(),
   version: z.string()
     .max(50, 'Version too long')
+    .nullable()
     .optional(),
 });
 

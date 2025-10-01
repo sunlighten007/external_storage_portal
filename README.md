@@ -1,63 +1,130 @@
-# Next.js SaaS Starter
+# OTA Image Management Portal
 
-This is a starter template for building a SaaS application using **Next.js** with support for authentication and a dashboard for logged-in users.
-
-**Demo: [https://next-saas-start.vercel.app/](https://next-saas-start.vercel.app/)**
+A comprehensive Next.js application for partners to upload and manage Android tablet OTA images with enterprise-grade features and robust testing.
 
 ## Features
 
-- Marketing landing page (`/`) with animated Terminal element
-- Dashboard pages with CRUD operations on users/teams
-- Basic RBAC with Owner and Member roles
-- Email/password authentication with JWTs stored to cookies
-- Global middleware to protect logged-in routes
-- Local middleware to protect Server Actions or validate Zod schemas
-- Activity logging system for any user events
+- **File Management**: Upload, download, and manage OTA image files
+- **Space Management**: Organize files by teams/partners
+- **User Authentication**: Secure JWT-based authentication system
+- **Role-Based Access**: Owner and Member roles with different permissions
+- **Activity Logging**: Comprehensive audit trail for all actions
+- **Responsive Design**: Mobile-first design with Tailwind CSS
+- **Comprehensive Testing**: Full E2E test suite with Playwright
+- **API Integration**: RESTful APIs with proper error handling
+- **File Validation**: Type and size validation for uploads
+- **Progress Tracking**: Real-time upload progress and status
 
 ## Tech Stack
 
-- **Framework**: [Next.js](https://nextjs.org/)
-- **Database**: [Postgres](https://www.postgresql.org/)
-- **ORM**: [Drizzle](https://orm.drizzle.team/)
-- **UI Library**: [shadcn/ui](https://ui.shadcn.com/)
+- **Framework**: [Next.js 15](https://nextjs.org/) with App Router
+- **Database**: [PostgreSQL](https://www.postgresql.org/) with [Drizzle ORM](https://orm.drizzle.team/)
+- **Storage**: [AWS S3](https://aws.amazon.com/s3/) for file uploads
+- **Authentication**: Custom JWT-based session system
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) with custom components
+- **Testing**: [Playwright](https://playwright.dev/) for E2E testing
+- **UI Components**: Custom components with [Radix UI](https://www.radix-ui.com/)
+- **Validation**: [Zod](https://zod.dev/) for schema validation
 
 ## Getting Started
 
 ```bash
-git clone https://github.com/nextjs/saas-starter
-cd saas-starter
-pnpm install
+git clone <repository-url>
+cd external_storage_portal
+npm install
 ```
 
 ## Running Locally
 
-Use the included setup script to create your `.env` file:
+### 1. Environment Setup
 
-```bash
-pnpm db:setup
+Create your `.env.local` file with the following variables:
+
+```env
+DATABASE_URL="postgresql://username:password@localhost:5432/ota_portal"
+AUTH_SECRET="your-secret-key-here"
+AWS_ACCESS_KEY_ID="your-aws-access-key"
+AWS_SECRET_ACCESS_KEY="your-aws-secret-key"
+AWS_REGION="us-east-1"
+AWS_S3_BUCKET="your-s3-bucket-name"
 ```
 
-Run the database migrations and seed the database with a default user and team:
+### 2. Database Setup
 
 ```bash
-pnpm db:migrate
-pnpm db:seed
+# Setup database
+npm run db:setup
+
+# Run migrations
+npm run db:migrate
+
+# Seed with test data
+npm run db:seed
 ```
 
-This will create the following user and team:
+This creates:
+- **Test User**: `test@test.com` / `admin123`
+- **Test Space**: Blaupunkt OTA images
+- **Sample Data**: Users, teams, and file records
 
-- User: `test@test.com`
-- Password: `admin123`
-
-You can also create new users through the `/sign-up` route.
-
-Finally, run the Next.js development server:
+### 3. Start Development Server
 
 ```bash
-pnpm dev
+npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser to see the app in action.
+Open [http://localhost:3000](http://localhost:3000) to see the application.
+
+## Testing
+
+### E2E Testing with Playwright
+
+```bash
+# Install Playwright browsers
+npx playwright install
+
+# Run all tests
+npm test
+
+# Run tests with UI
+npm run test:ui
+
+# Run specific test file
+npx playwright test auth.spec.ts
+
+# Run tests for specific browser
+npx playwright test --project=chromium
+```
+
+### Test Categories
+
+- **Authentication**: Login, logout, session management
+- **Dashboard**: Navigation, data display, responsive design
+- **Spaces**: File management, upload/download, metadata
+- **API Integration**: Endpoint testing, error handling
+- **File Upload**: Various file types, progress tracking
+
+### Test Documentation
+
+See [docs/TESTING.md](docs/TESTING.md) for comprehensive testing guide.
+
+## Project Structure
+
+```
+├── app/                    # Next.js App Router pages
+│   ├── (dashboard)/        # Protected dashboard pages
+│   ├── (login)/           # Authentication pages
+│   └── api/               # API routes
+├── lib/                   # Core application logic
+│   ├── auth/              # Authentication system
+│   ├── db/                # Database schema and queries
+│   └── s3/                # AWS S3 integration
+├── tests/                 # E2E test suite
+│   ├── utils/             # Test utilities and helpers
+│   └── *.spec.ts          # Test files
+├── components/            # Reusable UI components
+└── docs/                  # Project documentation
+```
 
 ## Going to Production
 

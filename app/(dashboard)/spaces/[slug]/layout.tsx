@@ -7,9 +7,9 @@ import { ChevronRight, Home } from 'lucide-react';
 
 interface SpaceLayoutProps {
   children: React.ReactNode;
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 async function Breadcrumbs({ slug }: { slug: string }) {
@@ -34,12 +34,13 @@ async function SpaceLayout({ children, params }: SpaceLayoutProps) {
     redirect('/login');
   }
 
-  const space = await getSpaceBySlug(params.slug);
+  const { slug } = await params;
+  const space = await getSpaceBySlug(slug);
   if (!space) {
     notFound();
   }
 
-  const hasAccess = await userHasSpaceAccess(session.user.id, space.id);
+  const hasAccess = await userHasSpaceAccess(session.user.id, slug);
   if (!hasAccess) {
     redirect('/spaces');
   }
@@ -54,7 +55,7 @@ async function SpaceLayout({ children, params }: SpaceLayoutProps) {
               <div className="h-4 w-4 bg-gray-200 rounded animate-pulse"></div>
             </div>
           }>
-            <Breadcrumbs slug={params.slug} />
+            <Breadcrumbs slug={slug} />
           </Suspense>
         </div>
       </div>

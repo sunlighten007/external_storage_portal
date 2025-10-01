@@ -6,7 +6,7 @@ import { generatePresignedDownloadUrl } from '@/lib/s3/client';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { slug: string; id: string } }
+  { params }: { params: Promise<{ slug: string; id: string }> }
 ) {
   try {
     // Verify authentication
@@ -15,8 +15,8 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
     
-    const spaceSlug = params.slug;
-    const uploadId = parseInt(params.id);
+    const { slug: spaceSlug, id } = await params;
+    const uploadId = parseInt(id);
     
     if (isNaN(uploadId)) {
       return NextResponse.json({ error: 'Invalid upload ID' }, { status: 400 });
@@ -30,7 +30,7 @@ export async function GET(
     
     // Verify user has access
     const hasAccess = await userHasSpaceAccess(
-      parseInt(session.user.id), 
+      session.user.id, 
       spaceSlug
     );
     if (!hasAccess) {

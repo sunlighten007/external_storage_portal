@@ -6,7 +6,7 @@ import { getSpaceBySlug, userHasSpaceAccess } from '@/lib/db/queries/spaces';
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
     // Verify authentication
@@ -15,7 +15,7 @@ export async function POST(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
     
-    const spaceSlug = params.slug;
+    const { slug: spaceSlug } = await params;
     
     // Verify space exists
     const space = await getSpaceBySlug(spaceSlug);
@@ -25,7 +25,7 @@ export async function POST(
     
     // Verify user has access to space
     const hasAccess = await userHasSpaceAccess(
-      parseInt(session.user.id), 
+      session.user.id, 
       spaceSlug
     );
     if (!hasAccess) {
