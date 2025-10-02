@@ -56,10 +56,13 @@
     "zod": "^3.24.4"
   },
   "devDependencies": {
-    "@aws-sdk/client-s3": "^3.899.0",
-    "@aws-sdk/s3-request-presigner": "^3.899.0",
+    "@aws-sdk/client-s3": "^3.734.0",
+    "@aws-sdk/s3-request-presigner": "^3.734.0",
     "@playwright/test": "^1.55.1",
     "@types/bcryptjs": "^2.4.6",
     "localstack": "^1.0.0"
+  },
+  "overrides": {
+    "@aws-sdk/types": "^3.734.0"
   }
 }
