@@ -79,6 +79,23 @@ export function getDatabaseUrl(): string {
     console.error('❌ Database URL not found in Amplify secrets!');
     console.error('Available secrets keys:', Object.keys(secrets));
     console.error('Full secrets:', secrets);
+    
+    // Try to provide a fallback or more helpful error message
+    if (process.env.NODE_ENV === 'production') {
+      console.error('🔧 Amplify Environment Variables Troubleshooting:');
+      console.error('1. Check AWS Amplify Console > App Settings > Environment variables');
+      console.error('2. Ensure variables are set as "Environment variables" (not "Secrets")');
+      console.error('3. Verify variable names match exactly (case-sensitive)');
+      console.error('4. Try redeploying after making changes');
+      
+      // Try to provide a temporary fallback for development
+      const fallbackUrl = process.env.POSTGRES_URL || process.env.DATABASE_CONNECTION_STRING;
+      if (fallbackUrl) {
+        console.log('🔄 Using fallback database URL');
+        return fallbackUrl;
+      }
+    }
+    
     throw new Error('Database URL not found. Please check your Amplify secret management configuration.');
   }
 
