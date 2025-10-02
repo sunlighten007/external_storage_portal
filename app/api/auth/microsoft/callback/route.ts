@@ -24,7 +24,9 @@ export async function GET(request: NextRequest) {
 
   try {
     // Process the Microsoft authentication
-    const result = await microsoftAuth({ code });
+    const formData = new FormData();
+    formData.append('code', code);
+    const result = await microsoftAuth({ code }, formData);
 
     if (result?.error) {
       return NextResponse.redirect(

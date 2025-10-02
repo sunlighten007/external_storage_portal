@@ -2,22 +2,29 @@ import { ConfidentialClientApplication } from '@azure/msal-node';
 import { Client } from '@microsoft/microsoft-graph-client';
 import { AuthenticationProvider } from '@microsoft/microsoft-graph-client';
 
-// Microsoft 365 Configuration
+// Microsoft 365 Configuration - only initialize if credentials are provided
 const msalConfig = {
   auth: {
-    clientId: process.env.AZURE_CLIENT_ID!,
-    clientSecret: process.env.AZURE_CLIENT_SECRET!,
-    authority: `https://login.microsoftonline.com/${process.env.AZURE_TENANT_ID}`,
+    clientId: process.env.AZURE_CLIENT_ID || '',
+    clientSecret: process.env.AZURE_CLIENT_SECRET || '',
+    authority: `https://login.microsoftonline.com/${process.env.AZURE_TENANT_ID || 'common'}`,
   },
 };
 
-const msalInstance = new ConfidentialClientApplication(msalConfig);
+// Only create MSAL instance if credentials are provided
+const msalInstance = process.env.AZURE_CLIENT_ID && process.env.AZURE_CLIENT_SECRET && process.env.AZURE_TENANT_ID
+  ? new ConfidentialClientApplication(msalConfig)
+  : null;
 
 // Custom authentication provider for Microsoft Graph
 class GraphAuthProvider implements AuthenticationProvider {
   private accessToken: string = '';
 
   async getAccessToken(): Promise<string> {
+    if (!msalInstance) {
+      throw new Error('Microsoft authentication not configured');
+    }
+
     if (this.accessToken) {
       return this.accessToken;
     }
@@ -60,6 +67,10 @@ export interface MicrosoftTokenResponse {
  * Exchange authorization code for access token
  */
 export async function exchangeCodeForToken(code: string, redirectUri: string): Promise<MicrosoftTokenResponse> {
+  if (!msalInstance) {
+    throw new Error('Microsoft authentication not configured');
+  }
+
   try {
     const tokenRequest = {
       code,
@@ -86,13 +97,18 @@ export async function exchangeCodeForToken(code: string, redirectUri: string): P
  */
 export async function getMicrosoftUser(accessToken: string): Promise<MicrosoftUser> {
   try {
-    const user = await graphClient
-      .me
-      .get({
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+    const response = await fetch('https://graph.microsoft.com/v1.0/me', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const user = await response.json();
 
     return {
       id: user.id!,
@@ -117,12 +133,16 @@ export function validateDomain(email: string): boolean {
 /**
  * Generate Microsoft OAuth2 authorization URL
  */
-export function getMicrosoftAuthUrl(redirectUri: string): string {
+export async function getMicrosoftAuthUrl(redirectUri: string): Promise<string> {
+  if (!msalInstance) {
+    throw new Error('Microsoft authentication not configured');
+  }
+
   const authUrlParameters = {
     scopes: ['User.Read'],
     redirectUri,
     prompt: 'select_account',
   };
 
-  return msalInstance.getAuthCodeUrl(authUrlParameters);
+  return await msalInstance.getAuthCodeUrl(authUrlParameters);
 }
