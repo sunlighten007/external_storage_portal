@@ -24,6 +24,8 @@
   },
   "dependencies": {
     "@aws-amplify/backend": "^1.16.1",
+    "@aws-sdk/client-s3": "^3.734.0",
+    "@aws-sdk/s3-request-presigner": "^3.734.0",
     "@azure/msal-node": "^3.8.0",
     "@microsoft/microsoft-graph-client": "^3.0.7",
     "@types/node": "^22.15.18",
@@ -56,8 +58,6 @@
     "zod": "^3.24.4"
   },
   "devDependencies": {
-    "@aws-sdk/client-s3": "^3.734.0",
-    "@aws-sdk/s3-request-presigner": "^3.734.0",
     "@playwright/test": "^1.55.1",
     "@types/bcryptjs": "^2.4.6",
     "localstack": "^1.0.0"
