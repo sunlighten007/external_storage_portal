@@ -1,5 +1,5 @@
 import { S3Client } from '@aws-sdk/client-s3';
-import { getS3Config } from '@/lib/amplify-gen2-config';
+import { getS3Config } from '@/lib/amplify-runtime-env';
 
 // Local S3 configuration for testing
 export const createLocalS3Client = () => {
