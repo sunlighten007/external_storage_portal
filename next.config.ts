@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     nodeMiddleware: true
   },
   // External packages for bcryptjs Node.js compatibility
-  serverExternalPackages: ['bcryptjs'],
+  serverExternalPackages: ['bcryptjs', 'aws-cdk-lib'],
   // Disable problematic features for Vercel deployment
   trailingSlash: true,
   // Disable problematic features for Vercel
