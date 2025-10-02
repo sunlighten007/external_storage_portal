@@ -72,6 +72,15 @@ export const signIn = validatedAction(signInSchema, async (data, formData) => {
 
   const { user: foundUser, team: foundTeam } = userWithTeam[0];
 
+  // Check if user has a password hash (not a Microsoft 365 user)
+  if (!foundUser.passwordHash) {
+    return {
+      error: 'Invalid email or password. Please try again.',
+      email,
+      password
+    };
+  }
+
   const isPasswordValid = await comparePasswords(
     password,
     foundUser.passwordHash
@@ -235,6 +244,16 @@ export const updatePassword = validatedActionWithUser(
   async (data, _, user) => {
     const { currentPassword, newPassword, confirmPassword } = data;
 
+    // Check if user has a password hash (not a Microsoft 365 user)
+    if (!user.passwordHash) {
+      return {
+        currentPassword,
+        newPassword,
+        confirmPassword,
+        error: 'Password update not available for Microsoft 365 users.'
+      };
+    }
+
     const isPasswordValid = await comparePasswords(
       currentPassword,
       user.passwordHash
@@ -292,6 +311,14 @@ export const deleteAccount = validatedActionWithUser(
   deleteAccountSchema,
   async (data, _, user) => {
     const { password } = data;
+
+    // Check if user has a password hash (not a Microsoft 365 user)
+    if (!user.passwordHash) {
+      return {
+        password,
+        error: 'Account deletion not available for Microsoft 365 users.'
+      };
+    }
 
     const isPasswordValid = await comparePasswords(password, user.passwordHash);
     if (!isPasswordValid) {
