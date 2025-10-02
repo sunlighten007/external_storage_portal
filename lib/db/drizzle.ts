@@ -1,13 +1,11 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import * as schema from './schema';
-import dotenv from 'dotenv';
+import { getDatabaseUrl } from '@/lib/amplify-config';
 
-dotenv.config();
+// Get database URL with proper error handling for Amplify
+const databaseUrl = getDatabaseUrl();
+console.log('✅ Database URL found, connecting...');
 
-if (!process.env.DATABASE_URL) {
-  throw new Error('DATABASE_URL environment variable is not set');
-}
-
-export const client = postgres(process.env.DATABASE_URL);
+export const client = postgres(databaseUrl);
 export const db = drizzle(client, { schema });
