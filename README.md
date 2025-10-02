@@ -75,6 +75,8 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) to see the application.
 
+**Production URL**: [https://partner-storage.infra.sunlighten.com](https://partner-storage.infra.sunlighten.com)
+
 ## Testing
 
 ### E2E Testing with Playwright

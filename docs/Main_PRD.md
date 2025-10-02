@@ -739,7 +739,7 @@ This is enforced at the application level in API routes.
 - **CORS Configuration**:
 ```json
 {
-  "AllowedOrigins": ["https://your-app.vercel.app"],
+  "AllowedOrigins": ["https://partner-storage.infra.sunlighten.com"],
   "AllowedMethods": ["PUT", "GET"],
   "AllowedHeaders": ["*"],
   "ExposeHeaders": ["ETag"]
@@ -784,7 +784,7 @@ S3_REGION=us-east-1
 S3_BUCKET=your-ota-bucket
 
 # NextAuth
-NEXTAUTH_URL=https://your-app.vercel.app
+NEXTAUTH_URL=https://partner-storage.infra.sunlighten.com
 NEXTAUTH_SECRET=<generate-with: openssl rand -base64 32>
 
 # Optional: Feature Flags
@@ -1638,7 +1638,7 @@ S3_ACCESS_KEY_ID=<your-key>
 S3_SECRET_ACCESS_KEY=<your-secret>
 S3_REGION=us-east-1
 S3_BUCKET=<your-bucket-name>
-NEXTAUTH_URL=https://your-app.vercel.app
+NEXTAUTH_URL=https://partner-storage.infra.sunlighten.com
 NEXTAUTH_SECRET=<generate-with: openssl rand -base64 32>
 ```
 
@@ -1650,7 +1650,7 @@ NEXTAUTH_SECRET=<generate-with: openssl rand -base64 32>
   {
     "AllowedHeaders": ["*"],
     "AllowedMethods": ["PUT", "GET", "HEAD"],
-    "AllowedOrigins": ["https://your-app.vercel.app"],
+    "AllowedOrigins": ["https://partner-storage.infra.sunlighten.com"],
     "ExposeHeaders": ["ETag"],
     "MaxAgeSeconds": 3000
   }

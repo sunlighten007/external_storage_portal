@@ -501,6 +501,7 @@ pnpm db:seed
 pnpm dev
 
 # Open http://localhost:3000
+# Production: https://partner-storage.infra.sunlighten.com
 ```
 
 ### Adding a New Feature

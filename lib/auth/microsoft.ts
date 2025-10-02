@@ -1,40 +1,68 @@
 import { ConfidentialClientApplication } from '@azure/msal-node';
 import { Client } from '@microsoft/microsoft-graph-client';
 import { AuthenticationProvider } from '@microsoft/microsoft-graph-client';
+import { getAzureConfig, validateAzureConfig, type AzureConfig } from './amplify-config';
 
-// Microsoft 365 Configuration - only initialize if credentials are provided
-const msalConfig = {
-  auth: {
-    clientId: process.env.AZURE_CLIENT_ID || '',
-    clientSecret: process.env.AZURE_CLIENT_SECRET || '',
-    authority: `https://login.microsoftonline.com/${process.env.AZURE_TENANT_ID || 'common'}`,
-  },
-};
+// Microsoft 365 Configuration - using AWS Amplify secrets
+let msalInstance: ConfidentialClientApplication | null = null;
+let azureConfig: AzureConfig | null = null;
 
-// Only create MSAL instance if credentials are provided
-const msalInstance = process.env.AZURE_CLIENT_ID && process.env.AZURE_CLIENT_SECRET && process.env.AZURE_TENANT_ID
-  ? new ConfidentialClientApplication(msalConfig)
-  : null;
+// Initialize Azure configuration from AWS Amplify secrets
+async function initializeAzureConfig(): Promise<AzureConfig> {
+  if (azureConfig) {
+    return azureConfig;
+  }
+
+  try {
+    azureConfig = await getAzureConfig();
+    
+    if (!validateAzureConfig(azureConfig)) {
+      throw new Error('Invalid Azure AD configuration');
+    }
+
+    return azureConfig;
+  } catch (error) {
+    console.error('Failed to initialize Azure configuration:', error);
+    throw new Error('Microsoft authentication not configured properly');
+  }
+}
+
+// Initialize MSAL instance with Azure configuration
+async function getMsalInstance(): Promise<ConfidentialClientApplication> {
+  if (msalInstance) {
+    return msalInstance;
+  }
+
+  const config = await initializeAzureConfig();
+  
+  const msalConfig = {
+    auth: {
+      clientId: config.clientId,
+      clientSecret: config.clientSecret,
+      authority: config.authority,
+    },
+  };
+
+  msalInstance = new ConfidentialClientApplication(msalConfig);
+  return msalInstance;
+}
 
 // Custom authentication provider for Microsoft Graph
 class GraphAuthProvider implements AuthenticationProvider {
   private accessToken: string = '';
 
   async getAccessToken(): Promise<string> {
-    if (!msalInstance) {
-      throw new Error('Microsoft authentication not configured');
-    }
-
     if (this.accessToken) {
       return this.accessToken;
     }
 
     try {
+      const msal = await getMsalInstance();
       const clientCredentialRequest = {
         scopes: ['https://graph.microsoft.com/.default'],
       };
 
-      const response = await msalInstance.acquireTokenByClientCredential(clientCredentialRequest);
+      const response = await msal.acquireTokenByClientCredential(clientCredentialRequest);
       this.accessToken = response!.accessToken;
       return this.accessToken;
     } catch (error) {
@@ -67,18 +95,15 @@ export interface MicrosoftTokenResponse {
  * Exchange authorization code for access token
  */
 export async function exchangeCodeForToken(code: string, redirectUri: string): Promise<MicrosoftTokenResponse> {
-  if (!msalInstance) {
-    throw new Error('Microsoft authentication not configured');
-  }
-
   try {
+    const msal = await getMsalInstance();
     const tokenRequest = {
       code,
       scopes: ['User.Read'],
       redirectUri,
     };
 
-    const response = await msalInstance.acquireTokenByCode(tokenRequest);
+    const response = await msal.acquireTokenByCode(tokenRequest);
     
     return {
       access_token: response!.accessToken,
@@ -134,15 +159,17 @@ export function validateDomain(email: string): boolean {
  * Generate Microsoft OAuth2 authorization URL
  */
 export async function getMicrosoftAuthUrl(redirectUri: string): Promise<string> {
-  if (!msalInstance) {
-    throw new Error('Microsoft authentication not configured');
+  try {
+    const msal = await getMsalInstance();
+    const authUrlParameters = {
+      scopes: ['User.Read'],
+      redirectUri,
+      prompt: 'select_account',
+    };
+
+    return await msal.getAuthCodeUrl(authUrlParameters);
+  } catch (error) {
+    console.error('Error generating Microsoft auth URL:', error);
+    throw new Error('Failed to generate Microsoft authentication URL');
   }
-
-  const authUrlParameters = {
-    scopes: ['User.Read'],
-    redirectUri,
-    prompt: 'select_account',
-  };
-
-  return await msalInstance.getAuthCodeUrl(authUrlParameters);
 }

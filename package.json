@@ -23,9 +23,9 @@
     "test:files:debug": "playwright test tests/file-upload-download.spec.ts --debug"
   },
   "dependencies": {
+    "@aws-amplify/backend": "^1.16.1",
     "@azure/msal-node": "^3.8.0",
     "@microsoft/microsoft-graph-client": "^3.0.7",
-    "postcss": "^8.5.3",
     "@types/node": "^22.15.18",
     "@types/react": "19.1.4",
     "@types/react-dom": "19.1.5",

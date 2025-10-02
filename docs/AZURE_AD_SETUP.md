@@ -23,8 +23,8 @@ This guide will help you set up an Azure AD application for Microsoft 365 authen
    - **Supported account types**: Select "Accounts in this organizational directory only"
    - **Redirect URI**: 
      - Platform: `Web`
-     - URI: `http://localhost:3000/api/auth/microsoft/callback` (for development)
-     - Add production URI: `https://yourdomain.com/api/auth/microsoft/callback`
+     - URI: `   ` (for development)
+     - Add production URI: `https://partner-storage.infra.sunlighten.com/api/auth/microsoft/callback`
 
 4. **Complete Registration**
    - Click "Register"
@@ -36,10 +36,10 @@ This guide will help you set up an Azure AD application for Microsoft 365 authen
    - In your app registration, go to "Authentication"
    - Under "Redirect URIs", add:
      - `http://localhost:3000/api/auth/microsoft/callback` (development)
-     - `https://yourdomain.com/api/auth/microsoft/callback` (production)
+     - `https://partner-storage.infra.sunlighten.com/api/auth/microsoft/callback` (production)
    - Under "Logout URL", add:
      - `http://localhost:3000/sign-in` (development)
-     - `https://yourdomain.com/sign-in` (production)
+     - `https://partner-storage.infra.sunlighten.com/sign-in` (production)
 
 2. **Configure Implicit Grant**
    - Under "Implicit grant and hybrid flows"
@@ -82,9 +82,21 @@ This guide will help you set up an Azure AD application for Microsoft 365 authen
    - In "Restrict access to users in specific organizations"
    - Add your tenant ID or domain: `sunlighten.com`
 
-## Step 6: Environment Variables
+## Step 6: Configuration
 
-Add these environment variables to your `.env.local` file:
+### Option A: AWS Amplify Secrets (Recommended for Production)
+
+The application now supports AWS Amplify secrets for secure credential management. See [AWS Amplify Secrets Integration](./AWS_AMPLIFY_SECRETS_INTEGRATION.md) for detailed setup instructions.
+
+**Required AWS Amplify Secrets:**
+- `AZURE_CLIENT_ID` - Your Azure AD Application Client ID
+- `AZURE_CLIENT_SECRET` - Your Azure AD Application Client Secret  
+- `AZURE_TENANT_ID` - Your Azure AD Tenant ID
+- `AZURE_REDIRECT_URI` - OAuth2 Redirect URI
+
+### Option B: Environment Variables (Development)
+
+For local development, you can still use environment variables in your `.env.local` file:
 
 ```bash
 # Azure AD Configuration
@@ -94,7 +106,10 @@ AZURE_TENANT_ID=your_directory_tenant_id
 
 # Application URL (for redirects)
 NEXTAUTH_URL=http://localhost:3000  # Change to production URL in production
+# Production URL: https://partner-storage.infra.sunlighten.com
 ```
+
+**Note**: The application will automatically detect and use AWS Amplify secrets when available, falling back to environment variables for development.
 
 ## Step 7: Test Configuration
 
@@ -113,8 +128,10 @@ NEXTAUTH_URL=http://localhost:3000  # Change to production URL in production
 ## Production Deployment
 
 1. **Update Redirect URIs**
-   - Add your production domain to redirect URIs in Azure AD
-   - Update `NEXTAUTH_URL` environment variable
+   - Add your production domain to redirect URIs in Azure AD:
+     - `https://partner-storage.infra.sunlighten.com/api/auth/microsoft/callback`
+   - Update `NEXTAUTH_URL` environment variable to:
+     - `https://partner-storage.infra.sunlighten.com`
 
 2. **Security Considerations**
    - Use HTTPS in production
