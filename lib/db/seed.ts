@@ -3,8 +3,8 @@ import { users, teams, teamMembers } from './schema';
 import { hashPassword } from '@/lib/auth/session';
 
 async function seed() {
-  const email = 'test@test.com';
-  const password = 'admin123';
+  const email = 'admin@sunlighten.com';
+  const password = '2x1izdBMbA67YExTq5YPA2PT';
   const passwordHash = await hashPassword(password);
 
   // Check if user already exists

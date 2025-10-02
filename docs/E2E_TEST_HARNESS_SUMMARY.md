@@ -2,7 +2,7 @@
 
 ## Overview
 
-I've successfully created a comprehensive End-to-End (E2E) test harness for your OTA Image Management Portal using Playwright. This test suite ensures both frontend and backend functionality work correctly together in a real browser environment.
+I've successfully created a comprehensive End-to-End (E2E) test harness for your Sunlighten - Partner Storage using Playwright. This test suite ensures both frontend and backend functionality work correctly together in a real browser environment.
 
 ## What Was Created
 

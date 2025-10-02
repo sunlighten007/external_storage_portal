@@ -1,4 +1,4 @@
-# OTA Portal - Architecture Overview
+# Sunlighten - Partner Storage - Architecture Overview
 
 ## System Architecture
 

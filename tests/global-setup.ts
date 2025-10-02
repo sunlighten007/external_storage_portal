@@ -13,10 +13,10 @@ async function globalSetup(config: FullConfig) {
   process.env.AUTH_SECRET = process.env.AUTH_SECRET || 'test-secret-key';
   
   // S3 LocalStack configuration
-  process.env.AWS_ACCESS_KEY_ID = 'test';
-  process.env.AWS_SECRET_ACCESS_KEY = 'test';
-  process.env.AWS_REGION = 'us-east-1';
-  process.env.AWS_S3_BUCKET = 'test-bucket';
+  process.env.S3_ACCESS_KEY_ID = 'test';
+  process.env.S3_SECRET_ACCESS_KEY = 'test';
+  process.env.S3_REGION = 'us-east-1';
+  process.env.S3_BUCKET = 'test-bucket';
   process.env.S3_ENDPOINT = 'http://localhost:4566';
   process.env.USE_LOCAL_S3 = 'true';
   

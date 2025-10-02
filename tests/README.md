@@ -1,6 +1,6 @@
 # E2E Test Suite
 
-This directory contains comprehensive end-to-end tests for the OTA Image Management Portal using Playwright.
+This directory contains comprehensive end-to-end tests for the Sunlighten - Partner Storage using Playwright.
 
 ## Test Structure
 

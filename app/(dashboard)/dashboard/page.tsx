@@ -8,8 +8,8 @@ export default function DashboardPage() {
       <section className="py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-bold text-gray-900 tracking-tight sm:text-5xl md:text-6xl">
-            OTA Image Management
-            <span className="block text-orange-500">Portal</span>
+            Sunlighten
+            <span className="block text-orange-500">Partner Storage</span>
           </h1>
           <p className="mt-6 text-lg text-gray-500 max-w-2xl mx-auto">
             Secure platform for partners to upload and manage Android tablet OTA images.
@@ -50,7 +50,7 @@ export default function DashboardPage() {
                 Ready to manage OTA images?
               </h2>
               <p className="mt-3 max-w-3xl text-lg text-gray-500">
-                Sunlighten's OTA Image Management Portal provides everything you need to securely
+                Sunlighten's Partner Storage provides everything you need to securely
                 upload and manage Android tablet firmware updates. Streamline your OTA distribution
                 process with our comprehensive platform.
               </p>

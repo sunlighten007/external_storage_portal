@@ -5,7 +5,7 @@ import { getUser, getTeamForUser } from '@/lib/db/queries';
 import { SWRConfig } from 'swr';
 
 export const metadata: Metadata = {
-  title: 'Sunlighten OTA Portal',
+  title: 'Sunlighten - Partner Storage',
   description: 'Secure platform for partners to upload and manage Android tablet OTA images.'
 };
 

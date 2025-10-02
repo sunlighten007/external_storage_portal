@@ -1,8 +1,8 @@
-# OTA Portal Implementation Plan
+# Sunlighten - Partner Storage Implementation Plan
 
 ## Overview
 
-This project already has a Next.js SaaS starter with authentication, teams (multi-tenancy), and RBAC. We'll adapt this foundation to build the OTA Image Management Portal described in the PRD.
+This project already has a Next.js SaaS starter with authentication, teams (multi-tenancy), and RBAC. We'll adapt this foundation to build the Sunlighten - Partner Storage described in the PRD.
 
 **Current State:**
 - ✅ Next.js 15 with App Router
@@ -109,10 +109,10 @@ pnpm add @aws-sdk/client-s3 @aws-sdk/s3-request-presigner
 
 **Variables:**
 ```
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
-AWS_REGION=us-east-1
-AWS_S3_BUCKET=your-bucket-name
+S3_ACCESS_KEY_ID=
+S3_SECRET_ACCESS_KEY=
+S3_REGION=us-east-1
+S3_BUCKET=your-bucket-name
 ```
 
 ### Task 2.3: Create S3 Client Library

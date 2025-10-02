@@ -1,6 +1,6 @@
 # Testing Guide
 
-This document provides comprehensive information about testing the OTA Image Management Portal.
+This document provides comprehensive information about testing the Sunlighten - Partner Storage.
 
 ## Overview
 
@@ -387,4 +387,4 @@ npx playwright test --reporter=github
 4. **Performance Tests**: Load testing
 5. **Security Tests**: Security validation
 
-This testing guide provides a comprehensive foundation for maintaining high-quality E2E tests for the OTA Image Management Portal.
+This testing guide provides a comprehensive foundation for maintaining high-quality E2E tests for the Sunlighten - Partner Storage.

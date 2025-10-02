@@ -14,7 +14,9 @@ export const users = pgTable('users', {
   id: serial('id').primaryKey(),
   name: varchar('name', { length: 100 }),
   email: varchar('email', { length: 255 }).notNull().unique(),
-  passwordHash: text('password_hash').notNull(),
+  passwordHash: text('password_hash'), // Made nullable for M365 users
+  externalId: varchar('external_id', { length: 255 }), // Microsoft Graph user ID
+  authProvider: varchar('auth_provider', { length: 20 }).notNull().default('local'), // 'local' or 'microsoft'
   role: varchar('role', { length: 20 }).notNull().default('member'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
   updatedAt: timestamp('updated_at').notNull().defaultNow(),

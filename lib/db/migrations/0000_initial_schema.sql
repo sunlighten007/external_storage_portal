@@ -1,5 +1,5 @@
--- OTA Image Management Portal - Initial Schema
--- This migration creates the complete schema for the OTA Portal
+-- Sunlighten - Partner Storage - Initial Schema
+-- This migration creates the complete schema for the Partner Storage
 
 -- Create users table
 CREATE TABLE IF NOT EXISTS "users" (
@@ -14,13 +14,13 @@ CREATE TABLE IF NOT EXISTS "users" (
 	CONSTRAINT "users_email_unique" UNIQUE("email")
 );
 
--- Create teams table (spaces for OTA Portal)
+-- Create teams table (spaces for Partner Storage)
 CREATE TABLE IF NOT EXISTS "teams" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"name" varchar(100) NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
-	-- OTA Portal specific fields
+	-- Partner Storage specific fields
 	"slug" varchar(100),
 	"description" text,
 	"s3_prefix" varchar(255),

@@ -1,4 +1,4 @@
-# OTA Portal - Progress Tracker
+# Sunlighten - Partner Storage - Progress Tracker
 
 **Project Start Date:** October 1, 2025  
 **Target Completion:** November 15, 2025 (6 weeks)
@@ -77,10 +77,10 @@
 
 ### Task 2.2: Add Environment Variables
 - [ ] Create/update `.env.local` *(Pending: User needs to add AWS credentials)*
-- [ ] Add `AWS_ACCESS_KEY_ID`
-- [ ] Add `AWS_SECRET_ACCESS_KEY`
-- [ ] Add `AWS_REGION`
-- [ ] Add `AWS_S3_BUCKET`
+- [ ] Add `S3_ACCESS_KEY_ID`
+- [ ] Add `S3_SECRET_ACCESS_KEY`
+- [ ] Add `S3_REGION`
+- [ ] Add `S3_BUCKET`
 - [ ] Test env vars load
 
 ### Task 2.3: Create S3 Client Library

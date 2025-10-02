@@ -11,7 +11,7 @@ test.describe('File Upload - Simple Tests', () => {
     
     if (isSignInPage) {
       // If we're on sign-in page, that's expected behavior
-      await expect(page).toHaveTitle(/Sunlighten OTA Portal/);
+      await expect(page).toHaveTitle(/Sunlighten - Partner Storage/);
       await expect(page.locator('h2')).toContainText(/Sign in to your account/);
     } else {
       // If we're on upload page, check upload elements
@@ -29,7 +29,7 @@ test.describe('File Upload - Simple Tests', () => {
     
     if (isSignInPage) {
       // If we're on sign-in page, that's expected behavior
-      await expect(page).toHaveTitle(/Sunlighten OTA Portal/);
+      await expect(page).toHaveTitle(/Sunlighten - Partner Storage/);
       await expect(page.locator('h2')).toContainText(/Sign in to your account/);
     } else {
       // If we're on files page, check files elements

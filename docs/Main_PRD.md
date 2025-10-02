@@ -1,4 +1,4 @@
-# Product Requirements Document: OTA Image Management Portal
+# Product Requirements Document: Sunlighten - Partner Storage
 
 ## 1. Executive Summary
 
@@ -778,10 +778,10 @@ POSTGRES_PASSWORD=
 POSTGRES_DATABASE=
 
 # AWS S3
-AWS_ACCESS_KEY_ID=AKIA...
-AWS_SECRET_ACCESS_KEY=...
-AWS_REGION=us-east-1
-AWS_S3_BUCKET=your-ota-bucket
+S3_ACCESS_KEY_ID=AKIA...
+S3_SECRET_ACCESS_KEY=...
+S3_REGION=us-east-1
+S3_BUCKET=your-ota-bucket
 
 # NextAuth
 NEXTAUTH_URL=https://your-app.vercel.app
@@ -1078,14 +1078,14 @@ import {
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 const s3Client = new S3Client({
-  region: process.env.AWS_REGION!,
+  region: process.env.S3_REGION!,
   credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+    accessKeyId: process.env.S3_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
   },
 });
 
-const BUCKET_NAME = process.env.AWS_S3_BUCKET!;
+const BUCKET_NAME = process.env.S3_BUCKET!;
 
 // Generate presigned URL with space prefix
 export async function generatePresignedUploadUrl(
@@ -1634,10 +1634,10 @@ INSERT INTO space_members (space_id, user_id, role) VALUES
 In Vercel dashboard → Settings → Environment Variables:
 
 ```
-AWS_ACCESS_KEY_ID=<your-key>
-AWS_SECRET_ACCESS_KEY=<your-secret>
-AWS_REGION=us-east-1
-AWS_S3_BUCKET=<your-bucket-name>
+S3_ACCESS_KEY_ID=<your-key>
+S3_SECRET_ACCESS_KEY=<your-secret>
+S3_REGION=us-east-1
+S3_BUCKET=<your-bucket-name>
 NEXTAUTH_URL=https://your-app.vercel.app
 NEXTAUTH_SECRET=<generate-with: openssl rand -base64 32>
 ```

@@ -7,7 +7,7 @@ test.describe('Authentication', () => {
     await page.goto('/sign-in');
     
     // Check page title and main elements
-    await expect(page).toHaveTitle(/Sunlighten OTA Portal/);
+    await expect(page).toHaveTitle(/Sunlighten - Partner Storage/);
     await expect(page.locator('h2')).toContainText(/Sign in to your account/);
     
     // Check form elements

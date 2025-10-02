@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# E2E Test Runner Script for OTA Image Management Portal
+# E2E Test Runner Script for Sunlighten - Partner Storage
 # This script sets up the test environment and runs Playwright tests
 
 set -e  # Exit on any error
 
-echo "🚀 Starting E2E Test Suite for OTA Image Management Portal"
+echo "🚀 Starting E2E Test Suite for Sunlighten - Partner Storage"
 echo "=========================================================="
 
 # Colors for output

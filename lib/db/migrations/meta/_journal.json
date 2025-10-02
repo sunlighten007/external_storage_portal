@@ -15,6 +15,13 @@
       "when": 1759309348990,
       "tag": "0001_perfect_exodus",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1759385421480,
+      "tag": "0002_cheerful_shen",
+      "breakpoints": true
     }
   ]
 }

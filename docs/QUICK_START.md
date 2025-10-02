@@ -1,4 +1,4 @@
-# OTA Portal - Quick Start Guide
+# Sunlighten - Partner Storage - Quick Start Guide
 
 ## What We're Building
 
@@ -136,10 +136,10 @@ This has ALL the detailed tasks
 ### 4. Add environment variables
 ```bash
 # Add to .env.local
-AWS_ACCESS_KEY_ID=your-key
-AWS_SECRET_ACCESS_KEY=your-secret
-AWS_REGION=us-east-1
-AWS_S3_BUCKET=your-bucket-name
+S3_ACCESS_KEY_ID=your-key
+S3_SECRET_ACCESS_KEY=your-secret
+S3_REGION=us-east-1
+S3_BUCKET=your-bucket-name
 ```
 
 ### 5. Start with Phase 1, Task 1.1

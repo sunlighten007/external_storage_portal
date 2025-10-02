@@ -1,4 +1,4 @@
-# OTA Image Management Portal
+# Sunlighten - Partner Storage
 
 A comprehensive Next.js application for partners to upload and manage Android tablet OTA images with enterprise-grade features and robust testing.
 
@@ -43,10 +43,10 @@ Create your `.env.local` file with the following variables:
 ```env
 DATABASE_URL="postgresql://username:password@localhost:5432/ota_portal"
 AUTH_SECRET="your-secret-key-here"
-AWS_ACCESS_KEY_ID="your-aws-access-key"
-AWS_SECRET_ACCESS_KEY="your-aws-secret-key"
-AWS_REGION="us-east-1"
-AWS_S3_BUCKET="your-s3-bucket-name"
+S3_ACCESS_KEY_ID="your-aws-access-key"
+S3_SECRET_ACCESS_KEY="your-aws-secret-key"
+S3_REGION="us-east-1"
+S3_BUCKET="your-s3-bucket-name"
 ```
 
 ### 2. Database Setup

@@ -10,7 +10,7 @@ import { createS3Client } from './local-config';
 
 const s3Client = createS3Client();
 
-const BUCKET_NAME = process.env.AWS_S3_BUCKET || 'test-bucket';
+const BUCKET_NAME = process.env.S3_BUCKET || 'test-bucket';
 
 /**
  * Generate pre-signed URL for direct upload to S3
