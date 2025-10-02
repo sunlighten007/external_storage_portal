@@ -2,7 +2,8 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   experimental: {
-    nodeMiddleware: true
+    nodeMiddleware: true,
+    serverComponentsExternalPackages: ['bcryptjs', 'aws-cdk-lib']
   },
   // External packages for bcryptjs Node.js compatibility
   serverExternalPackages: ['bcryptjs', 'aws-cdk-lib'],
