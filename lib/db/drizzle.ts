@@ -1,7 +1,7 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import * as schema from './schema';
-import { getDatabaseUrl } from '@/lib/amplify-config';
+import { getDatabaseUrl } from '@/lib/amplify-secrets';
 
 // Get database URL with proper error handling for Amplify
 const databaseUrl = getDatabaseUrl();
