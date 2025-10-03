@@ -101,10 +101,10 @@ function getRuntimeConfig(): RuntimeEnvConfig {
     AUTH_SECRET: process.env.AUTH_SECRET,
     USE_LOCAL_S3: process.env.USE_LOCAL_S3 === 'true',
     // Azure AD configuration
-    AZURE_CLIENT_ID: process.env.AZURE_CLIENT_ID,
     AZURE_CLIENT_SECRET: process.env.AZURE_CLIENT_SECRET,
-    AZURE_TENANT_ID: process.env.AZURE_TENANT_ID,
-    AZURE_REDIRECT_URI: process.env.AZURE_REDIRECT_URI || process.env.NEXTAUTH_URL + '/api/auth/microsoft/callback',
+    AZURE_CLIENT_ID: process.env.NEXT_PUBLIC_AZURE_CLIENT_ID,
+AZURE_TENANT_ID: process.env.NEXT_PUBLIC_AZURE_TENANT_ID,
+AZURE_REDIRECT_URI: process.env.NEXT_PUBLIC_AZURE_REDIRECT_URI || process.env.NEXTAUTH_URL + '/api/auth/microsoft/callback',
   };
 
   // Try alternative naming conventions

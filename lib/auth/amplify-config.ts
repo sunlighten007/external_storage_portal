@@ -44,18 +44,19 @@ export async function getAzureConfig(): Promise<AzureConfig> {
   try {
     // Get configuration from runtime environment handler
     const runtimeConfig = getRuntimeAzureConfig();
-    
+
     if (!runtimeConfig.clientId || !runtimeConfig.clientSecret) {
       throw new Error('Azure AD configuration is missing. Please ensure AZURE_CLIENT_ID and AZURE_CLIENT_SECRET are set in AWS Amplify secrets.');
     }
 
     return {
-      clientId: process.env.NEXT_PUBLIC_AZURE_CLIENT_ID || runtimeConfig.clientId,
       clientSecret: runtimeConfig.clientSecret,
-      tenantId: process.env.NEXT_PUBLIC_AZURE_TENANT_ID || runtimeConfig.tenantId,
-      redirectUri: process.env.NEXT_PUBLIC_AZURE_REDIRECT_URI || runtimeConfig.redirectUri,
+      clientId: runtimeConfig.clientId,
+      tenantId: runtimeConfig.tenantId,
+      redirectUri: runtimeConfig.redirectUri,
       scopes: ['User.Read'],
-      authority: `https://login.microsoftonline.com/${process.env.NEXT_PUBLIC_AZURE_TENANT_ID || runtimeConfig.tenantId}`,
+      authority: `https://login.microsoftonline.com/${runtimeConfig.AZURE_TENANT_ID}`,
+
     };
   } catch (error) {
     console.error('Failed to get Azure configuration:', error);
