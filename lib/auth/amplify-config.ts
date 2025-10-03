@@ -50,12 +50,12 @@ export async function getAzureConfig(): Promise<AzureConfig> {
     }
 
     return {
-      clientId: runtimeConfig.clientId,
+      clientId: process.env.NEXT_PUBLIC_AZURE_CLIENT_ID || runtimeConfig.clientId,
       clientSecret: runtimeConfig.clientSecret,
-      tenantId: runtimeConfig.tenantId,
-      redirectUri: runtimeConfig.redirectUri,
+      tenantId: process.env.NEXT_PUBLIC_AZURE_TENANT_ID || runtimeConfig.tenantId,
+      redirectUri: process.env.NEXT_PUBLIC_AZURE_REDIRECT_URI || runtimeConfig.redirectUri,
       scopes: ['User.Read'],
-      authority: `https://login.microsoftonline.com/${runtimeConfig.tenantId}`,
+      authority: `https://login.microsoftonline.com/${process.env.NEXT_PUBLIC_AZURE_TENANT_ID || runtimeConfig.tenantId}`,
     };
   } catch (error) {
     console.error('Failed to get Azure configuration:', error);
