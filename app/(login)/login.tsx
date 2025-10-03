@@ -36,10 +36,9 @@ export function Login() {
     }
   };
 
-  console.log('🔹 AZURE_CLIENT_ID:', process.env.AZURE_CLIENT_ID);
-console.log('🔹 AZURE_CLIENT_SECRET:', process.env.AZURE_CLIENT_SECRET);
-console.log('🔹 AZURE_TENANT_ID:', process.env.AZURE_TENANT_ID);
-console.log('🔹 AZURE_REDIRECT_URI:', process.env.AZURE_REDIRECT_URI);
+  console.log('🔹 AZURE_CLIENT_ID:', process.env.NEXT_PUBLIC_AZURE_CLIENT_ID);
+  console.log('🔹 AZURE_TENANT_ID:', process.env.NEXT_PUBLIC_AZURE_TENANT_ID);
+  console.log('🔹 AZURE_REDIRECT_URI:', process.env.NEXT_PUBLIC_AZURE_REDIRECT_URI);
   return (
     <div className="min-h-[100dvh] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
