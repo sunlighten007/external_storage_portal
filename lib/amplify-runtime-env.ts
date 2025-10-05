@@ -14,6 +14,7 @@ interface RuntimeEnvConfig {
   AZURE_CLIENT_SECRET: string;
   AZURE_TENANT_ID: string;
   AZURE_REDIRECT_URI: string;
+  NEXTAUTH_URL: string;
 }
 
 // Production fallback values - these should be replaced with real values
@@ -30,6 +31,7 @@ const PRODUCTION_FALLBACKS: RuntimeEnvConfig = {
   AZURE_CLIENT_SECRET: 'amplify-fallback-azure-client-secret',
   AZURE_TENANT_ID: 'common',
   AZURE_REDIRECT_URI: 'https://partner-storage.infra.sunlighten.com/api/auth/microsoft/callback',
+  NEXTAUTH_URL: 'https://partner-storage.infra.sunlighten.com',
 };
 
 // Development fallback values
@@ -46,6 +48,7 @@ const DEVELOPMENT_FALLBACKS: RuntimeEnvConfig = {
   AZURE_CLIENT_SECRET: 'test-azure-client-secret',
   AZURE_TENANT_ID: 'common',
   AZURE_REDIRECT_URI: 'http://localhost:3000/api/auth/microsoft/callback',
+  NEXTAUTH_URL: 'http://localhost:3000',
 };
 
 let cachedConfig: RuntimeEnvConfig | null = null;
@@ -104,8 +107,16 @@ function getRuntimeConfig(): RuntimeEnvConfig {
     AZURE_CLIENT_ID: process.env.AZURE_CLIENT_ID,
     AZURE_CLIENT_SECRET: process.env.AZURE_CLIENT_SECRET,
     AZURE_TENANT_ID: process.env.AZURE_TENANT_ID,
-    AZURE_REDIRECT_URI: process.env.AZURE_REDIRECT_URI || undefined
+    AZURE_REDIRECT_URI: process.env.AZURE_REDIRECT_URI || undefined,
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL || undefined,
   };
+  console.log("<<<>>>[[]] Resolved AZURE envs:1", {
+    AZURE_CLIENT_ID: envConfig.AZURE_CLIENT_ID,
+    AZURE_TENANT_ID: envConfig.AZURE_TENANT_ID,
+    AZURE_REDIRECT_URI: envConfig.AZURE_REDIRECT_URI,
+    NEXTAUTH_URL: envConfig.NEXTAUTH_URL,
+  });
+
 
   // Try alternative naming conventions
   if (!envConfig.DATABASE_URL) {
@@ -211,6 +222,7 @@ function getRuntimeConfig(): RuntimeEnvConfig {
     AZURE_CLIENT_SECRET: envConfig.AZURE_CLIENT_SECRET || fallbackConfig.AZURE_CLIENT_SECRET,
     AZURE_TENANT_ID: envConfig.AZURE_TENANT_ID || fallbackConfig.AZURE_TENANT_ID,
     AZURE_REDIRECT_URI: envConfig.AZURE_REDIRECT_URI || fallbackConfig.AZURE_REDIRECT_URI,
+    NEXTAUTH_URL: envConfig.NEXTAUTH_URL || fallbackConfig.NEXTAUTH_URL,
   };
 
   // Log which values are using fallbacks
@@ -224,7 +236,7 @@ function getRuntimeConfig(): RuntimeEnvConfig {
   if (!envConfig.AZURE_CLIENT_SECRET) usingFallbacks.push('AZURE_CLIENT_SECRET');
   if (!envConfig.AZURE_TENANT_ID) usingFallbacks.push('AZURE_TENANT_ID');
   if (!envConfig.AZURE_REDIRECT_URI) usingFallbacks.push('AZURE_REDIRECT_URI');
-
+  if (!envConfig.NEXTAUTH_URL) usingFallbacks.push('NEXTAUTH_URL');
   if (usingFallbacks.length > 0) {
     console.log('⚠️ Using fallback values for:', usingFallbacks.join(', '));
     console.log('This indicates AWS Amplify environment variables are not properly configured');
@@ -246,6 +258,7 @@ function getRuntimeConfig(): RuntimeEnvConfig {
     AZURE_CLIENT_SECRET: finalConfig.AZURE_CLIENT_SECRET ? 'SET' : 'NOT SET',
     AZURE_TENANT_ID: finalConfig.AZURE_TENANT_ID || 'NOT SET',
     AZURE_REDIRECT_URI: finalConfig.AZURE_REDIRECT_URI || 'NOT SET',
+    NEXTAUTH_URL: finalConfig.NEXTAUTH_URL || 'NOT SET',
   });
 
   cachedConfig = finalConfig;
