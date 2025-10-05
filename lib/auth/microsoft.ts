@@ -39,6 +39,7 @@ async function getMsalInstance(): Promise<ConfidentialClientApplication> {
     auth: {
       clientId: config.clientId,
       clientSecret: config.clientSecret,
+      tenantId: config.tenantId,
       authority: config.authority,
     },
   };

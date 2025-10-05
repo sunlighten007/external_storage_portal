@@ -104,7 +104,7 @@ function getRuntimeConfig(): RuntimeEnvConfig {
     AZURE_CLIENT_ID: process.env.AZURE_CLIENT_ID,
     AZURE_CLIENT_SECRET: process.env.AZURE_CLIENT_SECRET,
     AZURE_TENANT_ID: process.env.AZURE_TENANT_ID,
-    AZURE_REDIRECT_URI: process.env.AZURE_REDIRECT_URI || process.env.NEXTAUTH_URL + '/api/auth/microsoft/callback',
+    AZURE_REDIRECT_URI: process.env.AZURE_REDIRECT_URI || undefined
   };
 
   // Try alternative naming conventions
