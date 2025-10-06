@@ -33,8 +33,6 @@ const PRODUCTION_FALLBACKS: RuntimeEnvConfig = {
   AZURE_REDIRECT_URI: 'https://partner-storage.infra.sunlighten.com/api/auth/microsoft/callback',
   NEXTAUTH_URL: 'https://partner-storage.infra.sunlighten.com',
 };
-export const XYZ = process.env.XYZ;
-console.log('XYZ secret:', XYZ);
 // Development fallback values
 const DEVELOPMENT_FALLBACKS: RuntimeEnvConfig = {
   DATABASE_URL: 'postgresql://postgres:postgres@localhost:54322/postgres',
@@ -69,7 +67,7 @@ function isDevelopment(): boolean {
 }
 
 // Get configuration with comprehensive fallback handling
- function getRuntimeConfig(): RuntimeEnvConfig {
+function getRuntimeConfig(): RuntimeEnvConfig {
   if (cachedConfig) {
     return cachedConfig;
   }
