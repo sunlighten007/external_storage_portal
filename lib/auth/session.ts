@@ -3,7 +3,7 @@ import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 import { User } from '@/lib/db/schema';
 
-const key = new TextEncoder().encode(process.env.AUTH_SECRET || 'fallback-secret-key');
+const key = new TextEncoder().encode(process.env.NEXT_PUBLIC_AUTH_SECRET || 'fallback-secret-key');
 const SALT_ROUNDS = 10;
 
 export async function hashPassword(password: string) {

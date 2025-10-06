@@ -95,108 +95,108 @@ function getRuntimeConfig(): RuntimeEnvConfig {
 
   // Try to get configuration from environment variables
   const envConfig: Partial<RuntimeEnvConfig> = {
-    DATABASE_URL: process.env.DATABASE_URL,
-    S3_ACCESS_KEY_ID: process.env.S3_ACCESS_KEY_ID,
-    S3_SECRET_ACCESS_KEY: process.env.S3_SECRET_ACCESS_KEY,
-    S3_REGION: process.env.S3_REGION || 'us-east-1',
-    S3_BUCKET: process.env.S3_BUCKET,
-    AUTH_SECRET: process.env.AUTH_SECRET,
-    USE_LOCAL_S3: process.env.USE_LOCAL_S3 === 'true',
+    DATABASE_URL: process.env.NEXT_PUBLIC_DATABASE_URL,
+    S3_ACCESS_KEY_ID: process.env.NEXT_PUBLIC_S3_ACCESS_KEY_ID,
+    S3_SECRET_ACCESS_KEY: process.env.NEXT_PUBLIC_S3_SECRET_ACCESS_KEY,
+    S3_REGION: process.env.NEXT_PUBLIC_S3_REGION || 'us-east-1',
+    S3_BUCKET: process.env.NEXT_PUBLIC_S3_BUCKET,
+    AUTH_SECRET: process.env.NEXT_PUBLIC_AUTH_SECRET,
+    USE_LOCAL_S3: process.env.NEXT_PUBLIC_USE_LOCAL_S3 === 'true',
     // Azure AD configuration
-    AZURE_CLIENT_ID: process.env.AZURE_CLIENT_ID,
-    AZURE_CLIENT_SECRET: process.env.AZURE_CLIENT_SECRET,
-    AZURE_TENANT_ID: process.env.AZURE_TENANT_ID,
-    AZURE_REDIRECT_URI: process.env.AZURE_REDIRECT_URI || undefined,
-    NEXTAUTH_URL: process.env.NEXTAUTH_URL || undefined,
+    AZURE_CLIENT_ID: process.env.NEXT_PUBLIC_AZURE_CLIENT_ID,
+    AZURE_CLIENT_SECRET: process.env.NEXT_PUBLIC_AZURE_CLIENT_SECRET,
+    AZURE_TENANT_ID: process.env.NEXT_PUBLIC_AZURE_TENANT_ID,
+    AZURE_REDIRECT_URI: process.env.NEXT_PUBLIC_AZURE_REDIRECT_URI || undefined,
+    NEXTAUTH_URL: process.env.NEXT_PUBLIC_NEXTAUTH_URL || undefined,
   };
-  console.log('>>>>>>>>>>-2',process.env.DATABASE_URL,process.env.NEXT_PUBLIC_AA)
+  console.log('>>>>>>>>>>-2',process.env.NEXT_PUBLIC_DATABASE_URL,process.env.NEXT_PUBLIC_AA)
 
   console.log('>>>>>>>>>>>>>-1',envConfig)
   // Try alternative naming conventions
   if (!envConfig.DATABASE_URL) {
-    envConfig.DATABASE_URL = process.env.POSTGRES_URL || 
-                             process.env.DATABASE_CONNECTION_STRING ||
-                             process.env.POSTGRES_CONNECTION_STRING;
+    envConfig.DATABASE_URL = process.env.NEXT_PUBLIC_POSTGRES_URL || 
+                             process.env.NEXT_PUBLIC_DATABASE_CONNECTION_STRING ||
+                             process.env.NEXT_PUBLIC_POSTGRES_CONNECTION_STRING;
   }
 
   if (!envConfig.S3_ACCESS_KEY_ID) {
-    envConfig.S3_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID;
+    envConfig.S3_ACCESS_KEY_ID = process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID;
   }
 
   if (!envConfig.S3_SECRET_ACCESS_KEY) {
-    envConfig.S3_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY;
+    envConfig.S3_SECRET_ACCESS_KEY = process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY;
   }
 
   if (!envConfig.S3_BUCKET) {
-    envConfig.S3_BUCKET = process.env.AWS_S3_BUCKET;
+    envConfig.S3_BUCKET = process.env.NEXT_PUBLIC_AWS_S3_BUCKET;
   }
 
   // Try Amplify-specific patterns
   if (!envConfig.DATABASE_URL) {
-    envConfig.DATABASE_URL = process.env.AMPLIFY_DATABASE_URL || 
-                             process.env.AMPLIFY_SECRET_DATABASE_URL;
+    envConfig.DATABASE_URL = process.env.NEXT_PUBLIC_AMPLIFY_DATABASE_URL || 
+                             process.env.NEXT_PUBLIC_AMPLIFY_SECRET_DATABASE_URL;
   }
 
   if (!envConfig.S3_ACCESS_KEY_ID) {
-    envConfig.S3_ACCESS_KEY_ID = process.env.AMPLIFY_S3_ACCESS_KEY_ID || 
-                                 process.env.AMPLIFY_SECRET_S3_ACCESS_KEY_ID;
+    envConfig.S3_ACCESS_KEY_ID = process.env.NEXT_PUBLIC_AMPLIFY_S3_ACCESS_KEY_ID || 
+                                 process.env.NEXT_PUBLIC_AMPLIFY_SECRET_S3_ACCESS_KEY_ID;
   }
 
   if (!envConfig.S3_SECRET_ACCESS_KEY) {
-    envConfig.S3_SECRET_ACCESS_KEY = process.env.AMPLIFY_S3_SECRET_ACCESS_KEY || 
-                                     process.env.AMPLIFY_SECRET_S3_SECRET_ACCESS_KEY;
+    envConfig.S3_SECRET_ACCESS_KEY = process.env.NEXT_PUBLIC_AMPLIFY_S3_SECRET_ACCESS_KEY || 
+                                     process.env.NEXT_PUBLIC_AMPLIFY_SECRET_S3_SECRET_ACCESS_KEY;
   }
 
   if (!envConfig.S3_BUCKET) {
-    envConfig.S3_BUCKET = process.env.AMPLIFY_S3_BUCKET || 
-                          process.env.AMPLIFY_SECRET_S3_BUCKET;
+    envConfig.S3_BUCKET = process.env.NEXT_PUBLIC_AMPLIFY_S3_BUCKET || 
+                          process.env.NEXT_PUBLIC_AMPLIFY_SECRET_S3_BUCKET;
   }
 
   if (!envConfig.AUTH_SECRET) {
-    envConfig.AUTH_SECRET = process.env.AMPLIFY_AUTH_SECRET || 
-                            process.env.AMPLIFY_SECRET_AUTH_SECRET;
+    envConfig.AUTH_SECRET = process.env.NEXT_PUBLIC_AMPLIFY_AUTH_SECRET || 
+                            process.env.NEXT_PUBLIC_AMPLIFY_SECRET_AUTH_SECRET;
   }
 
   // Try Azure AD alternative naming conventions
   if (!envConfig.AZURE_CLIENT_ID) {
-    envConfig.AZURE_CLIENT_ID = process.env.MICROSOFT_CLIENT_ID || 
-                               process.env.MSAL_CLIENT_ID;
+    envConfig.AZURE_CLIENT_ID = process.env.NEXT_PUBLIC_MICROSOFT_CLIENT_ID || 
+                               process.env.NEXT_PUBLIC_MSAL_CLIENT_ID;
   }
 
   if (!envConfig.AZURE_CLIENT_SECRET) {
-    envConfig.AZURE_CLIENT_SECRET = process.env.MICROSOFT_CLIENT_SECRET || 
-                                   process.env.MSAL_CLIENT_SECRET;
+    envConfig.AZURE_CLIENT_SECRET = process.env.NEXT_PUBLIC_MICROSOFT_CLIENT_SECRET || 
+                                   process.env.NEXT_PUBLIC_MSAL_CLIENT_SECRET;
   }
 
   if (!envConfig.AZURE_TENANT_ID) {
-    envConfig.AZURE_TENANT_ID = process.env.MICROSOFT_TENANT_ID || 
-                               process.env.MSAL_TENANT_ID;
+    envConfig.AZURE_TENANT_ID = process.env.NEXT_PUBLIC_MICROSOFT_TENANT_ID || 
+                               process.env.NEXT_PUBLIC_MSAL_TENANT_ID;
   }
 
   if (!envConfig.AZURE_REDIRECT_URI) {
-    envConfig.AZURE_REDIRECT_URI = process.env.MICROSOFT_REDIRECT_URI || 
-                                  process.env.MSAL_REDIRECT_URI;
+    envConfig.AZURE_REDIRECT_URI = process.env.NEXT_PUBLIC_MICROSOFT_REDIRECT_URI || 
+                                  process.env.NEXT_PUBLIC_MSAL_REDIRECT_URI;
   }
 
   // Try Amplify-specific patterns for Azure AD
   if (!envConfig.AZURE_CLIENT_ID) {
-    envConfig.AZURE_CLIENT_ID = process.env.AMPLIFY_AZURE_CLIENT_ID || 
-                               process.env.AMPLIFY_SECRET_AZURE_CLIENT_ID;
+    envConfig.AZURE_CLIENT_ID = process.env.NEXT_PUBLIC_AMPLIFY_AZURE_CLIENT_ID || 
+                               process.env.NEXT_PUBLIC_AMPLIFY_SECRET_AZURE_CLIENT_ID;
   }
 
   if (!envConfig.AZURE_CLIENT_SECRET) {
-    envConfig.AZURE_CLIENT_SECRET = process.env.AMPLIFY_AZURE_CLIENT_SECRET || 
-                                   process.env.AMPLIFY_SECRET_AZURE_CLIENT_SECRET;
+    envConfig.AZURE_CLIENT_SECRET = process.env.NEXT_PUBLIC_AMPLIFY_AZURE_CLIENT_SECRET || 
+                                   process.env.NEXT_PUBLIC_AMPLIFY_SECRET_AZURE_CLIENT_SECRET;
   }
 
   if (!envConfig.AZURE_TENANT_ID) {
-    envConfig.AZURE_TENANT_ID = process.env.AMPLIFY_AZURE_TENANT_ID || 
-                               process.env.AMPLIFY_SECRET_AZURE_TENANT_ID;
+    envConfig.AZURE_TENANT_ID = process.env.NEXT_PUBLIC_AMPLIFY_AZURE_TENANT_ID || 
+                               process.env.NEXT_PUBLIC_AMPLIFY_SECRET_AZURE_TENANT_ID;
   }
 
   if (!envConfig.AZURE_REDIRECT_URI) {
-    envConfig.AZURE_REDIRECT_URI = process.env.AMPLIFY_AZURE_REDIRECT_URI || 
-                                  process.env.AMPLIFY_SECRET_AZURE_REDIRECT_URI;
+    envConfig.AZURE_REDIRECT_URI = process.env.NEXT_PUBLIC_AMPLIFY_AZURE_REDIRECT_URI || 
+                                  process.env.NEXT_PUBLIC_AMPLIFY_SECRET_AZURE_REDIRECT_URI;
   }
 
   console.log('>>>>>>>>>>>>>0',envConfig)

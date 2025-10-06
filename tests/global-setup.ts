@@ -9,16 +9,16 @@ async function globalSetup(config: FullConfig) {
   // Set up environment variables for tests
   // NODE_ENV is read-only, so we'll set it via global assignment
   (global as any).process = global.process || process;
-  process.env.DATABASE_URL = process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:54322/postgres';
-  process.env.AUTH_SECRET = process.env.AUTH_SECRET || 'test-secret-key';
+  process.env.NEXT_PUBLIC_DATABASE_URL = process.env.NEXT_PUBLIC_DATABASE_URL || 'postgresql://postgres:postgres@localhost:54322/postgres';
+  process.env.NEXT_PUBLIC_AUTH_SECRET = process.env.NEXT_PUBLIC_AUTH_SECRET || 'test-secret-key';
   
   // S3 LocalStack configuration
-  process.env.S3_ACCESS_KEY_ID = 'test';
-  process.env.S3_SECRET_ACCESS_KEY = 'test';
-  process.env.S3_REGION = 'us-east-1';
-  process.env.S3_BUCKET = 'test-bucket';
-  process.env.S3_ENDPOINT = 'http://localhost:4566';
-  process.env.USE_LOCAL_S3 = 'true';
+  process.env.NEXT_PUBLIC_S3_ACCESS_KEY_ID = 'test';
+  process.env.NEXT_PUBLIC_S3_SECRET_ACCESS_KEY = 'test';
+  process.env.NEXT_PUBLIC_S3_REGION = 'us-east-1';
+  process.env.NEXT_PUBLIC_S3_BUCKET = 'test-bucket';
+  process.env.NEXT_PUBLIC_S3_ENDPOINT = 'http://localhost:4566';
+  process.env.NEXT_PUBLIC_USE_LOCAL_S3 = 'true';
   
   // Ensure environment variables are available globally
   global.process = global.process || process;
@@ -128,8 +128,8 @@ async function setupTestDatabase() {
     }
     
     // Store test data for use in tests
-    process.env.TEST_USERS = JSON.stringify(createdUsers);
-    process.env.TEST_TEAMS = JSON.stringify(createdTeams);
+    process.env.NEXT_PUBLIC_TEST_USERS = JSON.stringify(createdUsers);
+    process.env.NEXT_PUBLIC_TEST_TEAMS = JSON.stringify(createdTeams);
     
     console.log('✅ Test database setup completed');
     console.log(`   - Created ${createdUsers.length} test users`);
