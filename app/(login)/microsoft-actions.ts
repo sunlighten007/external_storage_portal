@@ -100,8 +100,11 @@ export const microsoftAuth = validatedAction(microsoftAuthSchema, async (data) =
  * Generate Microsoft OAuth2 authorization URL
  */
 export async function getMicrosoftAuthUrl(): Promise<string> {
+  console.log('>>>>>>>>5',process.env.NEXT_PUBLIC_NEXTAUTH_URL)
   const redirectUri = `${process.env.NEXT_PUBLIC_NEXTAUTH_URL || 'http://localhost:3000'}/api/auth/microsoft/callback`;
   
   const { getMicrosoftAuthUrl: getAuthUrl } = await import('@/lib/auth/microsoft');
-  return await getAuthUrl(redirectUri);
+  const result = await getAuthUrl(redirectUri)
+  console.log('>>>>>>>6',result)
+  return result;
 }
