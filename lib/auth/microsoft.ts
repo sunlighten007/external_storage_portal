@@ -19,7 +19,7 @@ async function initializeAzureConfig(): Promise<AzureConfig> {
     if (!validateAzureConfig(azureConfig)) {
       throw new Error('Invalid Azure AD configuration');
     }
-
+    console.log('>>>>>>>>>>>>>>2',azureConfig)
     return azureConfig;
   } catch (error) {
     console.error('Failed to initialize Azure configuration:', error);
@@ -43,8 +43,10 @@ async function getMsalInstance(): Promise<ConfidentialClientApplication> {
       authority: config.authority,
     },
   };
+  console.log('>>>>>>>>3',config,msalConfig)
   
   msalInstance = new ConfidentialClientApplication(msalConfig);
+  console.log('>>>>>>>>4',msalInstance)
   return msalInstance;
 }
 
