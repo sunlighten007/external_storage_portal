@@ -26,11 +26,10 @@ export function Login() {
   const [microsoftLoading, setMicrosoftLoading] = useState(false);
 
   const handleMicrosoftLogin = async () => {
-    // setMicrosoftLoading(true);
+    setMicrosoftLoading(true);
     try {
       const authUrl = await getMicrosoftAuthUrl();
-      console.log(authUrl)
-      // window.location.href = authUrl;
+      window.location.href = authUrl;
     } catch (error) {
       console.error('Error initiating Microsoft login:', error);
       setMicrosoftLoading(false);

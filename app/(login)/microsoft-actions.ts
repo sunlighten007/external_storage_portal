@@ -1,5 +1,4 @@
 'use server';
-import { secret } from '@aws-amplify/backend';
 
 import { z } from 'zod';
 import { eq } from 'drizzle-orm';
@@ -107,9 +106,7 @@ export const microsoftAuth = validatedAction(microsoftAuthSchema, async (data) =
  */
 export async function getMicrosoftAuthUrl(): Promise<string> {
   const redirectUri = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/auth/microsoft/callback`;
-  console.log('xxxxxxxxxxxxxxxxxxxxxxxx',secret('XYZ'))
   
-  // const { getMicrosoftAuthUrl: getAuthUrl } = await import('@/lib/auth/microsoft');
-  // return await getAuthUrl(redirectUri);
-  return true
+  const { getMicrosoftAuthUrl: getAuthUrl } = await import('@/lib/auth/microsoft');
+  return await getAuthUrl(redirectUri);
 }
