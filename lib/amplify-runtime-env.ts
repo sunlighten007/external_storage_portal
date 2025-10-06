@@ -1,7 +1,6 @@
 // AWS Amplify Runtime Environment Variables Handler
 // This handles the specific case where AWS Amplify doesn't inject env vars at runtime
 
-
 interface RuntimeEnvConfig {
   DATABASE_URL: string;
   S3_ACCESS_KEY_ID: string;
@@ -71,14 +70,11 @@ function isDevelopment(): boolean {
 
 // Get configuration with comprehensive fallback handling
  function getRuntimeConfig(): RuntimeEnvConfig {
-  
   if (cachedConfig) {
     return cachedConfig;
   }
 
   console.log('🔍 Loading AWS Amplify runtime configuration...');
-
-
   console.log('NODE_ENV:', process.env.NODE_ENV);
   console.log('AMPLIFY_ENV:', process.env.AMPLIFY_ENV);
   console.log('AWS_LAMBDA_FUNCTION_NAME:', process.env.AWS_LAMBDA_FUNCTION_NAME);
@@ -88,7 +84,6 @@ function isDevelopment(): boolean {
   // Get all available environment variables for debugging
   const allEnvVars = Object.keys(process.env).sort();
   console.log('All available environment variables:', allEnvVars.slice(0, 20), '...');
-  console.log("Get all env variables", process.env)
   
   // Filter for relevant variables
   const relevantVars = allEnvVars.filter(key => 

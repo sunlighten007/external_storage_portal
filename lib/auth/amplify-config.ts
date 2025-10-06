@@ -18,7 +18,6 @@ export const auth = defineAuth({
     // For now, we'll handle Azure AD through our custom implementation
   }
 });
-console.log('xxxxxxxxxx', secret('XYZ'))
 
 /**
  * Azure AD Configuration Interface

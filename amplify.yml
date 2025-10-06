@@ -13,7 +13,6 @@ frontend:
     build:
       commands:
         - echo "Building the app..."
-        - echo "XYZ=$(echo "$secrets" | jq -r '.XYZ')" >> .env.production
         - npm run build
   artifacts:
     baseDirectory: .next
