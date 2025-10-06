@@ -13,6 +13,8 @@ frontend:
     build:
       commands:
         - echo "Building the app..."
+        - yum install jq -y
+        - echo "XYZ=$(echo "$secrets" | jq -r '.XYZ')" >> .env.production
         - npm run build
   artifacts:
     baseDirectory: .next
