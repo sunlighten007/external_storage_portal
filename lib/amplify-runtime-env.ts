@@ -71,19 +71,16 @@ function isDevelopment(): boolean {
 }
 
 // Get configuration with comprehensive fallback handling
-function getRuntimeConfig(): RuntimeEnvConfig {
+async function getRuntimeConfig() {
   
   if (cachedConfig) {
     return cachedConfig;
   }
 
-  async function secret() {
     const secret = await getSecretValue();
+    console.log('🔍 Loading AWS Amplify runtime configuration...');
     console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!response2", secret)
     console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!response3", secret.XYZ,);
-  }
-  console.log('🔍 Loading AWS Amplify runtime configuration...');
-  secret()
 
   console.log('NODE_ENV:', process.env.NODE_ENV);
   console.log('AMPLIFY_ENV:', process.env.AMPLIFY_ENV);
