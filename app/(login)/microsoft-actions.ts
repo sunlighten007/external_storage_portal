@@ -19,7 +19,7 @@ export const microsoftAuth = validatedAction(microsoftAuthSchema, async (data) =
 
   try {
     // Exchange authorization code for access token
-    const redirectUri = `${process.env.NEXT_PUBLIC_NEXTAUTH_URL || 'http://localhost:3000'}/api/auth/microsoft/callback`;
+    const redirectUri = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/auth/microsoft/callback`;
     const tokenResponse = await exchangeCodeForToken(code, redirectUri);
 
     // Get user information from Microsoft Graph
@@ -100,11 +100,8 @@ export const microsoftAuth = validatedAction(microsoftAuthSchema, async (data) =
  * Generate Microsoft OAuth2 authorization URL
  */
 export async function getMicrosoftAuthUrl(): Promise<string> {
-  console.log('>>>>>>>>5',process.env.NEXT_PUBLIC_NEXTAUTH_URL)
-  const redirectUri = `${process.env.NEXT_PUBLIC_NEXTAUTH_URL || 'http://localhost:3000'}/api/auth/microsoft/callback`;
+  const redirectUri = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/auth/microsoft/callback`;
   
   const { getMicrosoftAuthUrl: getAuthUrl } = await import('@/lib/auth/microsoft');
-  const result = await getAuthUrl(redirectUri)
-  console.log('>>>>>>>6',result)
-  return result;
+  return await getAuthUrl(redirectUri);
 }
