@@ -5,7 +5,7 @@ import { getS3Config } from '@/lib/amplify-runtime-env';
 export const createLocalS3Client = () => {
   return new S3Client({
     region: 'us-east-1',
-    endpoint: process.env.S3_ENDPOINT || 'http://localhost:4566',
+    endpoint: process.env.NEXT_PUBLIC_S3_ENDPOINT || 'http://localhost:4566',
     credentials: {
       accessKeyId: 'test',
       secretAccessKey: 'test',

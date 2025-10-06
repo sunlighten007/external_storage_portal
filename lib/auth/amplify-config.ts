@@ -44,7 +44,8 @@ export async function getAzureConfig(): Promise<AzureConfig> {
   try {
     // Get configuration from runtime environment handler
     const runtimeConfig = getRuntimeAzureConfig();
-    
+    console.log('>>>>>>>>>>>>>>>>>>>>',runtimeConfig)
+
     if (!runtimeConfig.clientId || !runtimeConfig.clientSecret) {
       throw new Error('Azure AD configuration is missing. Please ensure AZURE_CLIENT_ID and AZURE_CLIENT_SECRET are set in AWS Amplify secrets.');
     }

@@ -4,7 +4,7 @@ const fs = require("fs");
 async function runMigration() {
   const client = new Client({
     connectionString:
-      process.env.DATABASE_URL ||
+      process.env.NEXT_PUBLIC_DATABASE_URL ||
       "postgresql://postgres:postgres@localhost:54322/postgres",
   });
 
