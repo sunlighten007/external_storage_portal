@@ -109,6 +109,7 @@ function getRuntimeConfig(): RuntimeEnvConfig {
     AZURE_REDIRECT_URI: process.env.AZURE_REDIRECT_URI || undefined,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL || undefined,
   };
+  console.log('>>>>>>>>>>-2',process.env.DATABASE_URL,process.env.NEXT_PUBLIC_AA)
 
   console.log('>>>>>>>>>>>>>-1',envConfig)
   // Try alternative naming conventions
