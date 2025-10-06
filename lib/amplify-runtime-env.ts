@@ -115,6 +115,7 @@ function getRuntimeConfig(): RuntimeEnvConfig {
     AZURE_TENANT_ID: envConfig.AZURE_TENANT_ID,
     AZURE_REDIRECT_URI: envConfig.AZURE_REDIRECT_URI,
     NEXTAUTH_URL: envConfig.NEXTAUTH_URL,
+    XYZ: process.env.XYZ
   });
 
 
