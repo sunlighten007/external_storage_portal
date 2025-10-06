@@ -18,6 +18,7 @@ export const auth = defineAuth({
     // For now, we'll handle Azure AD through our custom implementation
   }
 });
+console.log('xxxxxxxxxx', secret('XYZ'))
 
 /**
  * Azure AD Configuration Interface
@@ -44,7 +45,7 @@ export async function getAzureConfig(): Promise<AzureConfig> {
   try {
     // Get configuration from runtime environment handler
     const runtimeConfig = getRuntimeAzureConfig();
-    
+
     if (!runtimeConfig.clientId || !runtimeConfig.clientSecret) {
       throw new Error('Azure AD configuration is missing. Please ensure AZURE_CLIENT_ID and AZURE_CLIENT_SECRET are set in AWS Amplify secrets.');
     }
