@@ -20,12 +20,6 @@ export const microsoftAuth = validatedAction(microsoftAuthSchema, async (data) =
   try {
     // Exchange authorization code for access token
     const redirectUri = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/auth/microsoft/callback`;
-    console.log("<<<>>>[[]] Resolved AZURE envs:3", {
-      AZURE_CLIENT_ID: process.env.AZURE_CLIENT_ID,
-      AZURE_CLIENT_SECRET: process.env.AZURE_CLIENT_SECRET,
-      AZURE_TENANT_ID: process.env.AZURE_TENANT_ID,
-      NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-    })
     const tokenResponse = await exchangeCodeForToken(code, redirectUri);
 
     // Get user information from Microsoft Graph

@@ -1,6 +1,5 @@
 // AWS Amplify Runtime Environment Variables Handler
 // This handles the specific case where AWS Amplify doesn't inject env vars at runtime
-import { secret } from '@aws-amplify/backend';
 
 interface RuntimeEnvConfig {
   DATABASE_URL: string;
@@ -111,9 +110,6 @@ function getRuntimeConfig(): RuntimeEnvConfig {
     AZURE_REDIRECT_URI: process.env.AZURE_REDIRECT_URI || undefined,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL || undefined,
   };
-  console.log("<<<>>>[[]] Resolved AZURE envs:1", {
-    AZURE_CLIENT_ID: secret('XYZ')
-  });
 
   // Try alternative naming conventions
   if (!envConfig.DATABASE_URL) {

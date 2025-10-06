@@ -13,8 +13,6 @@ frontend:
     build:
       commands:
         - echo "Building the app..."
-        # Inject Azure vars into Next.js .env.production
-        - env | grep -e AZURE_CLIENT_ID -e AZURE_TENANT_ID -e AZURE_REDIRECT_URI -e NEXTAUTH_URL >> .env.production || true
         - npm run build
   artifacts:
     baseDirectory: .next

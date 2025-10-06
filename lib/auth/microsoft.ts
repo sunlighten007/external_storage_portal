@@ -43,12 +43,6 @@ async function getMsalInstance(): Promise<ConfidentialClientApplication> {
       authority: config.authority,
     },
   };
-  console.log("<<<>>>[[]] Resolved AZURE envs:2", {
-    clientId: msalConfig.auth.clientId,
-    tenantId: msalConfig.auth.tenantId,
-    authority: msalConfig.auth.authority,
-    redirectUri: config.redirectUri,
-  });
   
   msalInstance = new ConfidentialClientApplication(msalConfig);
   return msalInstance;
