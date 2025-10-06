@@ -1,7 +1,6 @@
 // AWS Amplify Runtime Environment Variables Handler
 // This handles the specific case where AWS Amplify doesn't inject env vars at runtime
 
-import { getSecretValue } from "../lib/secrets"
 
 interface RuntimeEnvConfig {
   DATABASE_URL: string;
@@ -71,16 +70,14 @@ function isDevelopment(): boolean {
 }
 
 // Get configuration with comprehensive fallback handling
-async function getRuntimeConfig() {
+ function getRuntimeConfig(): RuntimeEnvConfig {
   
   if (cachedConfig) {
     return cachedConfig;
   }
 
-    const secret = await getSecretValue();
-    console.log('🔍 Loading AWS Amplify runtime configuration...');
-    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!response2", secret)
-    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!response3", secret.XYZ,);
+  console.log('🔍 Loading AWS Amplify runtime configuration...');
+
 
   console.log('NODE_ENV:', process.env.NODE_ENV);
   console.log('AMPLIFY_ENV:', process.env.AMPLIFY_ENV);
