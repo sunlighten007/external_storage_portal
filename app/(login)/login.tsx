@@ -34,7 +34,7 @@ export function Login() {
       console.log('>>>>>>>7',authUrl)
       console.log('>>>>>>>>9')
 
-      // window.location.href = authUrl;
+      window.location.href = authUrl;
     } catch (error) {
       console.error('Error initiating Microsoft login:', error);
       setMicrosoftLoading(false);
