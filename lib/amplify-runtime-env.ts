@@ -110,6 +110,7 @@ function getRuntimeConfig(): RuntimeEnvConfig {
     NEXTAUTH_URL: process.env.NEXTAUTH_URL || undefined,
   };
 
+  console.log('>>>>>>>>>>>>>-1',envConfig)
   // Try alternative naming conventions
   if (!envConfig.DATABASE_URL) {
     envConfig.DATABASE_URL = process.env.POSTGRES_URL || 
@@ -196,6 +197,8 @@ function getRuntimeConfig(): RuntimeEnvConfig {
     envConfig.AZURE_REDIRECT_URI = process.env.AMPLIFY_AZURE_REDIRECT_URI || 
                                   process.env.AMPLIFY_SECRET_AZURE_REDIRECT_URI;
   }
+
+  console.log('>>>>>>>>>>>>>0',envConfig)
 
   // Choose appropriate fallback values
   const fallbackConfig = isDevelopment() ? DEVELOPMENT_FALLBACKS : PRODUCTION_FALLBACKS;
