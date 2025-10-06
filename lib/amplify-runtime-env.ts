@@ -247,10 +247,13 @@ function getRuntimeConfig(): RuntimeEnvConfig {
     AUTH_SECRET: finalConfig.AUTH_SECRET ? 'SET' : 'NOT SET',
     USE_LOCAL_S3: finalConfig.USE_LOCAL_S3 ? 'true' : 'false',
     AZURE_CLIENT_ID: finalConfig.AZURE_CLIENT_ID ? 'SET' : 'NOT SET',
-    AZURE_CLIENT_SECRET: finalConfig.AZURE_CLIENT_SECRET ? 'SET' : 'NOT SET',
+    AZURE_CLIENT_SECRET: finalConfig.AZURE_CLIENT_SECRET,
     AZURE_TENANT_ID: finalConfig.AZURE_TENANT_ID || 'NOT SET',
     AZURE_REDIRECT_URI: finalConfig.AZURE_REDIRECT_URI || 'NOT SET',
     NEXTAUTH_URL: finalConfig.NEXTAUTH_URL || 'NOT SET',
+    // AZURE_TENANT_ID: finalConfig.AZURE_TENANT_ID ? 'SET' : 'NOT SET',
+    // AZURE_REDIRECT_URI: finalConfig.AZURE_REDIRECT_URI ? 'SET' : 'NOT SET',
+    // NEXTAUTH_URL: finalConfig.NEXTAUTH_URL ? 'SET' : 'NOT SET',
   });
 
   cachedConfig = finalConfig;
