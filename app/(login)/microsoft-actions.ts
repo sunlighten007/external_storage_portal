@@ -20,6 +20,7 @@ export const microsoftAuth = validatedAction(microsoftAuthSchema, async (data) =
   try {
     // Exchange authorization code for access token
     const redirectUri = `${process.env.NEXT_PUBLIC_NEXTAUTH_URL || 'http://localhost:3000'}/api/auth/microsoft/callback`;
+    console.log('>>>>>>>>>>>>>>>10',redirectUri)
     const tokenResponse = await exchangeCodeForToken(code, redirectUri);
 
     // Get user information from Microsoft Graph
