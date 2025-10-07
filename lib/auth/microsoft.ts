@@ -105,8 +105,11 @@ export async function exchangeCodeForToken(code: string, redirectUri: string): P
       scopes: ['User.Read'],
       redirectUri,
     };
+    console.log('>>>>>>>>>>>>>>>12',msal,tokenRequest)
 
     const response = await msal.acquireTokenByCode(tokenRequest);
+    console.log('>>>>>>>>>>>>>>>13',response)
+
     
     return {
       access_token: response!.accessToken,
@@ -115,6 +118,7 @@ export async function exchangeCodeForToken(code: string, redirectUri: string): P
       scope: 'User.Read',
     };
   } catch (error) {
+    console.log('>>>>>>>>>>>>>>>14')
     console.error('Error exchanging code for token:', error);
     throw new Error('Failed to exchange authorization code for access token');
   }
