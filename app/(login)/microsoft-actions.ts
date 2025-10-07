@@ -25,6 +25,8 @@ export const microsoftAuth = validatedAction(microsoftAuthSchema, async (data) =
 
     // Get user information from Microsoft Graph
     const microsoftUser = await getMicrosoftUser(tokenResponse.access_token);
+    console.log('>>>>>>>>>>>>>>>11',microsoftUser,tokenResponse)
+
 
     // Validate domain restriction
     if (!validateDomain(microsoftUser.mail)) {
@@ -39,6 +41,7 @@ export const microsoftAuth = validatedAction(microsoftAuthSchema, async (data) =
       .from(users)
       .where(eq(users.email, microsoftUser.mail))
       .limit(1);
+      console.log('>>>>>>>>>>>>>>>11',existingUser)
 
     if (existingUser.length === 0) {
       return {
