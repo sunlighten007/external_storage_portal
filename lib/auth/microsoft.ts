@@ -19,7 +19,6 @@ async function initializeAzureConfig(): Promise<AzureConfig> {
     if (!validateAzureConfig(azureConfig)) {
       throw new Error('Invalid Azure AD configuration');
     }
-    console.log('>>>>>>>>>>>>>>2',azureConfig)
     return azureConfig;
   } catch (error) {
     console.error('Failed to initialize Azure configuration:', error);
@@ -43,10 +42,8 @@ async function getMsalInstance(): Promise<ConfidentialClientApplication> {
       authority: config.authority,
     },
   };
-  console.log('>>>>>>>>3',config,msalConfig)
   
   msalInstance = new ConfidentialClientApplication(msalConfig);
-  console.log('>>>>>>>>4',msalInstance)
   return msalInstance;
 }
 
@@ -105,10 +102,8 @@ export async function exchangeCodeForToken(code: string, redirectUri: string): P
       scopes: ['User.Read'],
       redirectUri,
     };
-    console.log('>>>>>>>>>>>>>>>12',msal,tokenRequest)
 
     const response = await msal.acquireTokenByCode(tokenRequest);
-    console.log('>>>>>>>>>>>>>>>13',response)
 
     
     return {
@@ -118,7 +113,6 @@ export async function exchangeCodeForToken(code: string, redirectUri: string): P
       scope: 'User.Read',
     };
   } catch (error) {
-    console.log('>>>>>>>>>>>>>>>14')
     console.error('Error exchanging code for token:', error);
     throw new Error('Failed to exchange authorization code for access token');
   }

@@ -20,12 +20,10 @@ export const microsoftAuth = validatedAction(microsoftAuthSchema, async (data) =
   try {
     // Exchange authorization code for access token
     const redirectUri = `${process.env.NEXT_PUBLIC_NEXTAUTH_URL || 'http://localhost:3000'}/api/auth/microsoft/callback`;
-    console.log('>>>>>>>>>>>>>>>10',redirectUri)
     const tokenResponse = await exchangeCodeForToken(code, redirectUri);
 
     // Get user information from Microsoft Graph
     const microsoftUser = await getMicrosoftUser(tokenResponse.access_token);
-    console.log('>>>>>>>>>>>>>>>11',microsoftUser,tokenResponse)
 
 
     // Validate domain restriction
@@ -34,6 +32,7 @@ export const microsoftAuth = validatedAction(microsoftAuthSchema, async (data) =
         error: 'Access denied. Only users with @sunlighten.com email addresses are allowed.',
       };
     }
+    console.log('???1')
 
     // Check if user exists in our database
     const existingUser = await db
@@ -41,7 +40,7 @@ export const microsoftAuth = validatedAction(microsoftAuthSchema, async (data) =
       .from(users)
       .where(eq(users.email, microsoftUser.mail))
       .limit(1);
-      console.log('>>>>>>>>>>>>>>>11',existingUser)
+      console.log('???2')
 
     if (existingUser.length === 0) {
       return {
@@ -93,6 +92,7 @@ export const microsoftAuth = validatedAction(microsoftAuthSchema, async (data) =
     // Redirect to dashboard
     redirect('/dashboard');
   } catch (error) {
+    console.log('???3')
     console.error('Microsoft authentication error:', error);
     return {
       error: 'Authentication failed. Please try again.',
@@ -104,11 +104,9 @@ export const microsoftAuth = validatedAction(microsoftAuthSchema, async (data) =
  * Generate Microsoft OAuth2 authorization URL
  */
 export async function getMicrosoftAuthUrl(): Promise<string> {
-  console.log('>>>>>>>>5',process.env.NEXT_PUBLIC_NEXTAUTH_URL)
   const redirectUri = `${process.env.NEXT_PUBLIC_NEXTAUTH_URL || 'http://localhost:3000'}/api/auth/microsoft/callback`;
   
   const { getMicrosoftAuthUrl: getAuthUrl } = await import('@/lib/auth/microsoft');
   const result = await getAuthUrl(redirectUri)
-  console.log('>>>>>>>6',result)
   return result;
 }
