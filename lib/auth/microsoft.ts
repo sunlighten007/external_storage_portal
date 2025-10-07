@@ -104,7 +104,6 @@ export async function exchangeCodeForToken(code: string, redirectUri: string): P
     };
 
     const response = await msal.acquireTokenByCode(tokenRequest);
-
     
     return {
       access_token: response!.accessToken,
