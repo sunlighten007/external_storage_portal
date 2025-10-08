@@ -89,7 +89,7 @@ function getRuntimeConfig(): RuntimeEnvConfig {
     AZURE_CLIENT_ID: process.env.AZURE_CLIENT_ID || process.env.NEXT_PUBLIC_AZURE_CLIENT_ID,
     AZURE_CLIENT_SECRET: process.env.AZURE_CLIENT_SECRET || process.env.NEXT_PUBLIC_AZURE_CLIENT_SECRET,
     AZURE_TENANT_ID: process.env.AZURE_TENANT_ID || process.env.NEXT_PUBLIC_AZURE_TENANT_ID,
-    AZURE_REDIRECT_URI: process.env.AZURE_REDIRECT_URI || process.env.NEXT_PUBLIC_MICROSOFT_REDIRECT_URI || (process.env.NEXTAUTH_URL ? process.env.NEXTAUTH_URL + '/api/auth/microsoft/callback' : undefined),
+    AZURE_REDIRECT_URI: process.env.AZURE_REDIRECT_URI || process.env.NEXT_PUBLIC_MICROSOFT_REDIRECT_URI || (process.env.NEXTAUTH_URL ? process.env.NEXTAUTH_URL + '/api/auth/microsoft/callback' : 'https://partner-storage.infra.sunlighten.com/api/auth/microsoft/callback'),
   };
 
   // Try alternative naming conventions
