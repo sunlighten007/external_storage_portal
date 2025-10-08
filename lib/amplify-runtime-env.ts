@@ -216,6 +216,12 @@ function getRuntimeConfig(): RuntimeEnvConfig {
   } else if (isDev) {
     console.log('✅ Configuration loaded successfully');
   }
+  
+  // Debug Azure redirect URI specifically
+  console.log('🔍 Azure Redirect URI Debug:');
+  console.log('NEXT_PUBLIC_MICROSOFT_REDIRECT_URI:', process.env.NEXT_PUBLIC_MICROSOFT_REDIRECT_URI);
+  console.log('NEXTAUTH_URL:', process.env.NEXTAUTH_URL);
+  console.log('Final AZURE_REDIRECT_URI:', finalConfig.AZURE_REDIRECT_URI);
 
   cachedConfig = finalConfig;
   return finalConfig;
