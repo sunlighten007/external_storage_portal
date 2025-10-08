@@ -7,18 +7,25 @@ export async function GET(request: NextRequest) {
   const error = searchParams.get('error');
   const errorDescription = searchParams.get('error_description');
 
+  // Get the base URL from environment or construct it
+  const baseUrl = process.env.NEXTAUTH_URL || `https://partner-storage.infra.sunlighten.com`;
+  
+  console.log('🔍 Callback debug:');
+  console.log('request.url:', request.url);
+  console.log('baseUrl:', baseUrl);
+
   // Handle OAuth errors
   if (error) {
     console.error('Microsoft OAuth error:', error, errorDescription);
     return NextResponse.redirect(
-      new URL(`/sign-in?error=${encodeURIComponent('Microsoft authentication failed. Please try again.')}`, request.url)
+      new URL(`/sign-in?error=${encodeURIComponent('Microsoft authentication failed. Please try again.')}`, baseUrl)
     );
   }
 
   // Check for authorization code
   if (!code) {
     return NextResponse.redirect(
-      new URL('/sign-in?error=' + encodeURIComponent('No authorization code received'), request.url)
+      new URL('/sign-in?error=' + encodeURIComponent('No authorization code received'), baseUrl)
     );
   }
 
@@ -30,16 +37,16 @@ export async function GET(request: NextRequest) {
 
     if (result?.error) {
       return NextResponse.redirect(
-        new URL(`/sign-in?error=${encodeURIComponent(result.error)}`, request.url)
+        new URL(`/sign-in?error=${encodeURIComponent(result.error)}`, baseUrl)
       );
     }
 
     // If successful, redirect to dashboard (this should not be reached due to redirect in microsoftAuth)
-    return NextResponse.redirect(new URL('/dashboard', request.url));
+    return NextResponse.redirect(new URL('/dashboard', baseUrl));
   } catch (error) {
     console.error('Microsoft authentication callback error:', error);
     return NextResponse.redirect(
-      new URL(`/sign-in?error=${encodeURIComponent('Authentication failed. Please try again.')}`, request.url)
+      new URL(`/sign-in?error=${encodeURIComponent('Authentication failed. Please try again.')}`, baseUrl)
     );
   }
 }

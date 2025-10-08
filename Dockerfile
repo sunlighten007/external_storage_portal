@@ -11,5 +11,8 @@ COPY . .
 # Build the application
 RUN npm run build:prod
 
+# Setup database if needed
+RUN if [ "$DATABASE_SETUP" = "true" ]; then npm run db:setup; fi
+
 # Start the production server
 CMD ["npm", "run", "start:prod"]

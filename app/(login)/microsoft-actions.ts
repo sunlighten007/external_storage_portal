@@ -88,8 +88,9 @@ export const microsoftAuth = validatedAction(microsoftAuthSchema, async (data) =
     // Set session
     await setSession(user);
 
-    // Redirect to dashboard
-    redirect('/dashboard');
+    // Redirect to dashboard with proper base URL
+    const baseUrl = process.env.NEXTAUTH_URL || 'https://partner-storage.infra.sunlighten.com';
+    redirect(`${baseUrl}/dashboard`);
   } catch (error) {
     console.error('Microsoft authentication error:', error);
     return {
