@@ -19,7 +19,7 @@ export const microsoftAuth = validatedAction(microsoftAuthSchema, async (data) =
 
   try {
     // Exchange authorization code for access token
-    const redirectUri = `${process.env.NEXTAUTH_URL || 'https://partner-storage.infra.sunlighten.com'}/api/auth/microsoft/callback`;
+    const redirectUri = process.env.NEXT_PUBLIC_MICROSOFT_REDIRECT_URI || `${process.env.NEXTAUTH_URL || 'https://partner-storage.infra.sunlighten.com'}/api/auth/microsoft/callback`;
     const tokenResponse = await exchangeCodeForToken(code, redirectUri);
 
     // Get user information from Microsoft Graph
@@ -100,7 +100,7 @@ export const microsoftAuth = validatedAction(microsoftAuthSchema, async (data) =
  * Generate Microsoft OAuth2 authorization URL
  */
 export async function getMicrosoftAuthUrl(): Promise<string> {
-  const redirectUri = `${process.env.NEXTAUTH_URL || 'https://partner-storage.infra.sunlighten.com'}/api/auth/microsoft/callback`;
+  const redirectUri = process.env.NEXT_PUBLIC_MICROSOFT_REDIRECT_URI || `${process.env.NEXTAUTH_URL || 'https://partner-storage.infra.sunlighten.com'}/api/auth/microsoft/callback`;
   
   const { getMicrosoftAuthUrl: getAuthUrl } = await import('@/lib/auth/microsoft');
   return await getAuthUrl(redirectUri);
