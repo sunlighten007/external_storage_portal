@@ -6,7 +6,7 @@
     "build": "next build",
     "build:prod": "NODE_ENV=production next build",
     "start": "next start",
-    "start:prod": "NODE_ENV=production next dev",
+    "start:prod": "NODE_ENV=production next start",
     "deploy:prod": "npm run build:prod && npm run start:prod",
     "db:setup": "npx tsx lib/db/setup.ts",
     "db:seed": "npx tsx lib/db/seed.ts",

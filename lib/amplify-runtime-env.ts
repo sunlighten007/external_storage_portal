@@ -70,27 +70,11 @@ function getRuntimeConfig(): RuntimeEnvConfig {
     return cachedConfig;
   }
 
-  console.log('🔍 Loading AWS Amplify runtime configuration...');
-  console.log('NODE_ENV:', process.env.NODE_ENV);
-  console.log('AMPLIFY_ENV:', process.env.AMPLIFY_ENV);
-  console.log('AWS_LAMBDA_FUNCTION_NAME:', process.env.AWS_LAMBDA_FUNCTION_NAME);
-  console.log('isAmplifyEnvironment:', isAmplifyEnvironment());
-  console.log('isDevelopment:', isDevelopment());
-
-  // Get all available environment variables for debugging
-  const allEnvVars = Object.keys(process.env).sort();
-  console.log('All available environment variables:', allEnvVars.slice(0, 20), '...');
-  
-  // Filter for relevant variables
-  const relevantVars = allEnvVars.filter(key => 
-    key.includes('DATABASE') || 
-    key.includes('S3_') || 
-    key.includes('AUTH_') || 
-    key.includes('AWS_') ||
-    key.includes('AMPLIFY_') ||
-    key.includes('NEXT_PUBLIC_')
-  );
-  console.log('Relevant environment variables:', relevantVars);
+  // Simplified logging - only log if there are issues
+  const isDev = isDevelopment();
+  if (isDev) {
+    console.log('🔍 Loading runtime configuration...');
+  }
 
   // Try to get configuration from environment variables
   const envConfig: Partial<RuntimeEnvConfig> = {
@@ -105,7 +89,7 @@ function getRuntimeConfig(): RuntimeEnvConfig {
     AZURE_CLIENT_ID: process.env.AZURE_CLIENT_ID || process.env.NEXT_PUBLIC_AZURE_CLIENT_ID,
     AZURE_CLIENT_SECRET: process.env.AZURE_CLIENT_SECRET || process.env.NEXT_PUBLIC_AZURE_CLIENT_SECRET,
     AZURE_TENANT_ID: process.env.AZURE_TENANT_ID || process.env.NEXT_PUBLIC_AZURE_TENANT_ID,
-    AZURE_REDIRECT_URI: process.env.AZURE_REDIRECT_URI || process.env.NEXTAUTH_URL + '/api/auth/microsoft/callback',
+    AZURE_REDIRECT_URI: process.env.AZURE_REDIRECT_URI || process.env.NEXT_PUBLIC_MICROSOFT_REDIRECT_URI || (process.env.NEXTAUTH_URL ? process.env.NEXTAUTH_URL + '/api/auth/microsoft/callback' : undefined),
   };
 
   // Try alternative naming conventions
@@ -226,28 +210,12 @@ function getRuntimeConfig(): RuntimeEnvConfig {
   if (!envConfig.AZURE_TENANT_ID) usingFallbacks.push('AZURE_TENANT_ID');
   if (!envConfig.AZURE_REDIRECT_URI) usingFallbacks.push('AZURE_REDIRECT_URI');
 
-  if (usingFallbacks.length > 0) {
+  // Only log warnings in production if using fallbacks
+  if (usingFallbacks.length > 0 && !isDev) {
     console.log('⚠️ Using fallback values for:', usingFallbacks.join(', '));
-    console.log('This indicates AWS Amplify environment variables are not properly configured');
-    console.log('Please check your Amplify console: App Settings > Environment variables');
-    console.log('Required variables: DATABASE_URL, S3_ACCESS_KEY_ID, S3_SECRET_ACCESS_KEY, S3_BUCKET, AUTH_SECRET, AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, AZURE_TENANT_ID');
-  } else {
-    console.log('✅ All configuration loaded from environment variables');
+  } else if (isDev) {
+    console.log('✅ Configuration loaded successfully');
   }
-
-  console.log('Final configuration:', {
-    DATABASE_URL: finalConfig.DATABASE_URL ? 'SET' : 'NOT SET',
-    S3_ACCESS_KEY_ID: finalConfig.S3_ACCESS_KEY_ID ? 'SET' : 'NOT SET',
-    S3_SECRET_ACCESS_KEY: finalConfig.S3_SECRET_ACCESS_KEY ? 'SET' : 'NOT SET',
-    S3_REGION: finalConfig.S3_REGION || 'NOT SET',
-    S3_BUCKET: finalConfig.S3_BUCKET || 'NOT SET',
-    AUTH_SECRET: finalConfig.AUTH_SECRET ? 'SET' : 'NOT SET',
-    USE_LOCAL_S3: finalConfig.USE_LOCAL_S3 ? 'true' : 'false',
-    AZURE_CLIENT_ID: finalConfig.AZURE_CLIENT_ID ? 'SET' : 'NOT SET',
-    AZURE_CLIENT_SECRET: finalConfig.AZURE_CLIENT_SECRET ? 'SET' : 'NOT SET',
-    AZURE_TENANT_ID: finalConfig.AZURE_TENANT_ID || 'NOT SET',
-    AZURE_REDIRECT_URI: finalConfig.AZURE_REDIRECT_URI || 'NOT SET',
-  });
 
   cachedConfig = finalConfig;
   return finalConfig;
