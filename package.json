@@ -23,7 +23,6 @@
     "test:files:debug": "playwright test tests/file-upload-download.spec.ts --debug"
   },
   "dependencies": {
-    "@aws-amplify/backend": "^1.16.1",
     "@aws-sdk/client-s3": "^3.734.0",
     "@aws-sdk/s3-request-presigner": "^3.734.0",
     "@azure/msal-node": "^3.8.0",
@@ -32,11 +31,9 @@
     "@types/react": "19.1.4",
     "@types/react-dom": "19.1.5",
     "autoprefixer": "^10.4.21",
-    "aws-cdk-lib": "^2.219.0",
     "bcryptjs": "^3.0.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "constructs": "^10.4.2",
     "dotenv": "^16.5.0",
     "drizzle-kit": "^0.31.1",
     "drizzle-orm": "^0.43.1",

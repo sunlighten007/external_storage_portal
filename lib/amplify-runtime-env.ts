@@ -87,23 +87,24 @@ function getRuntimeConfig(): RuntimeEnvConfig {
     key.includes('S3_') || 
     key.includes('AUTH_') || 
     key.includes('AWS_') ||
-    key.includes('AMPLIFY_')
+    key.includes('AMPLIFY_') ||
+    key.includes('NEXT_PUBLIC_')
   );
   console.log('Relevant environment variables:', relevantVars);
 
   // Try to get configuration from environment variables
   const envConfig: Partial<RuntimeEnvConfig> = {
-    DATABASE_URL: process.env.DATABASE_URL,
-    S3_ACCESS_KEY_ID: process.env.S3_ACCESS_KEY_ID,
-    S3_SECRET_ACCESS_KEY: process.env.S3_SECRET_ACCESS_KEY,
-    S3_REGION: process.env.S3_REGION || 'us-east-1',
-    S3_BUCKET: process.env.S3_BUCKET,
-    AUTH_SECRET: process.env.AUTH_SECRET,
-    USE_LOCAL_S3: process.env.USE_LOCAL_S3 === 'true',
+    DATABASE_URL: process.env.DATABASE_URL || process.env.NEXT_PUBLIC_DATABASE_URL,
+    S3_ACCESS_KEY_ID: process.env.S3_ACCESS_KEY_ID || process.env.NEXT_PUBLIC_S3_ACCESS_KEY_ID,
+    S3_SECRET_ACCESS_KEY: process.env.S3_SECRET_ACCESS_KEY || process.env.NEXT_PUBLIC_S3_SECRET_ACCESS_KEY,
+    S3_REGION: process.env.S3_REGION || process.env.NEXT_PUBLIC_S3_REGION || 'us-east-1',
+    S3_BUCKET: process.env.S3_BUCKET || process.env.NEXT_PUBLIC_S3_BUCKET,
+    AUTH_SECRET: process.env.AUTH_SECRET || process.env.NEXT_PUBLIC_AUTH_SECRET,
+    USE_LOCAL_S3: process.env.USE_LOCAL_S3 === 'true' || process.env.NEXT_PUBLIC_USE_LOCAL_S3 === 'true',
     // Azure AD configuration
-    AZURE_CLIENT_ID: process.env.AZURE_CLIENT_ID,
-    AZURE_CLIENT_SECRET: process.env.AZURE_CLIENT_SECRET,
-    AZURE_TENANT_ID: process.env.AZURE_TENANT_ID,
+    AZURE_CLIENT_ID: process.env.AZURE_CLIENT_ID || process.env.NEXT_PUBLIC_AZURE_CLIENT_ID,
+    AZURE_CLIENT_SECRET: process.env.AZURE_CLIENT_SECRET || process.env.NEXT_PUBLIC_AZURE_CLIENT_SECRET,
+    AZURE_TENANT_ID: process.env.AZURE_TENANT_ID || process.env.NEXT_PUBLIC_AZURE_TENANT_ID,
     AZURE_REDIRECT_URI: process.env.AZURE_REDIRECT_URI || process.env.NEXTAUTH_URL + '/api/auth/microsoft/callback',
   };
 

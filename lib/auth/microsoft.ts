@@ -1,22 +1,22 @@
 import { ConfidentialClientApplication } from '@azure/msal-node';
 import { Client } from '@microsoft/microsoft-graph-client';
 import { AuthenticationProvider } from '@microsoft/microsoft-graph-client';
-import { getAzureConfig, validateAzureConfig, type AzureConfig } from './amplify-config';
+import { getAzureConfig } from '../amplify-runtime-env';
 
-// Microsoft 365 Configuration - using AWS Amplify secrets
+// Microsoft 365 Configuration - using runtime environment
 let msalInstance: ConfidentialClientApplication | null = null;
-let azureConfig: AzureConfig | null = null;
+let azureConfig: any = null;
 
-// Initialize Azure configuration from AWS Amplify secrets
-async function initializeAzureConfig(): Promise<AzureConfig> {
+// Initialize Azure configuration from runtime environment
+async function initializeAzureConfig() {
   if (azureConfig) {
     return azureConfig;
   }
 
   try {
-    azureConfig = await getAzureConfig();
+    azureConfig = getAzureConfig();
     
-    if (!validateAzureConfig(azureConfig)) {
+    if (!azureConfig.clientId || !azureConfig.clientSecret) {
       throw new Error('Invalid Azure AD configuration');
     }
 
@@ -39,7 +39,7 @@ async function getMsalInstance(): Promise<ConfidentialClientApplication> {
     auth: {
       clientId: config.clientId,
       clientSecret: config.clientSecret,
-      authority: config.authority,
+      authority: `https://login.microsoftonline.com/${config.tenantId}`,
     },
   };
 

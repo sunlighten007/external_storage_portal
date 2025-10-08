@@ -1,19 +1,20 @@
-import { compare, hash } from 'bcryptjs';
 import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 import { User } from '@/lib/db/schema';
 
 const key = new TextEncoder().encode(process.env.AUTH_SECRET || 'fallback-secret-key');
-const SALT_ROUNDS = 10;
 
+// Dynamic import for bcryptjs to avoid Edge Runtime issues
 export async function hashPassword(password: string) {
-  return hash(password, SALT_ROUNDS);
+  const { hash } = await import('bcryptjs');
+  return hash(password, 10);
 }
 
 export async function comparePasswords(
   plainTextPassword: string,
   hashedPassword: string
 ) {
+  const { compare } = await import('bcryptjs');
   return compare(plainTextPassword, hashedPassword);
 }
 

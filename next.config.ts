@@ -2,11 +2,10 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   experimental: {
-    nodeMiddleware: true,
-    serverComponentsExternalPackages: ['bcryptjs', 'aws-cdk-lib']
+    nodeMiddleware: true
   },
   // External packages for bcryptjs Node.js compatibility
-  serverExternalPackages: ['bcryptjs', 'aws-cdk-lib'],
+  serverExternalPackages: ['bcryptjs'],
   // Disable problematic features for Vercel deployment
   trailingSlash: true,
   // Disable problematic features for Vercel
