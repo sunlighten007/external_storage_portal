@@ -160,6 +160,8 @@ export function validateDomain(email: string): boolean {
  */
 export async function getMicrosoftAuthUrl(redirectUri: string): Promise<string> {
   try {
+    console.log('🔍 getMicrosoftAuthUrl in microsoft.ts called with redirectUri:', redirectUri);
+    
     const msal = await getMsalInstance();
     const authUrlParameters = {
       scopes: ['User.Read'],
@@ -167,7 +169,11 @@ export async function getMicrosoftAuthUrl(redirectUri: string): Promise<string> 
       prompt: 'select_account',
     };
 
-    return await msal.getAuthCodeUrl(authUrlParameters);
+    console.log('🔍 authUrlParameters:', authUrlParameters);
+    const authUrl = await msal.getAuthCodeUrl(authUrlParameters);
+    console.log('🔍 Generated auth URL:', authUrl);
+    
+    return authUrl;
   } catch (error) {
     console.error('Error generating Microsoft auth URL:', error);
     throw new Error('Failed to generate Microsoft authentication URL');

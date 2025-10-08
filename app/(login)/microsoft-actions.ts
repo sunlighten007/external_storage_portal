@@ -21,11 +21,6 @@ export const microsoftAuth = validatedAction(microsoftAuthSchema, async (data) =
     // Exchange authorization code for access token
     const redirectUri = process.env.NEXT_PUBLIC_MICROSOFT_REDIRECT_URI || `${process.env.NEXTAUTH_URL || 'https://partner-storage.infra.sunlighten.com'}/api/auth/microsoft/callback`;
     
-    // Debug logging
-    console.log('🔍 Microsoft Auth Debug:');
-    console.log('NEXT_PUBLIC_MICROSOFT_REDIRECT_URI:', process.env.NEXT_PUBLIC_MICROSOFT_REDIRECT_URI);
-    console.log('NEXTAUTH_URL:', process.env.NEXTAUTH_URL);
-    console.log('Final redirectUri:', redirectUri);
     
     const tokenResponse = await exchangeCodeForToken(code, redirectUri);
 
@@ -109,8 +104,8 @@ export const microsoftAuth = validatedAction(microsoftAuthSchema, async (data) =
 export async function getMicrosoftAuthUrl(): Promise<string> {
   const redirectUri = process.env.NEXT_PUBLIC_MICROSOFT_REDIRECT_URI || `${process.env.NEXTAUTH_URL || 'https://partner-storage.infra.sunlighten.com'}/api/auth/microsoft/callback`;
   
-  // Debug logging
-  console.log('🔍 Microsoft Auth URL Debug:');
+  // Temporary debug logging
+  console.log('🔍 getMicrosoftAuthUrl called');
   console.log('NEXT_PUBLIC_MICROSOFT_REDIRECT_URI:', process.env.NEXT_PUBLIC_MICROSOFT_REDIRECT_URI);
   console.log('NEXTAUTH_URL:', process.env.NEXTAUTH_URL);
   console.log('Final redirectUri:', redirectUri);
