@@ -45,7 +45,7 @@ const DEVELOPMENT_FALLBACKS: RuntimeEnvConfig = {
   AZURE_CLIENT_ID: 'test-azure-client-id',
   AZURE_CLIENT_SECRET: 'test-azure-client-secret',
   AZURE_TENANT_ID: 'common',
-  AZURE_REDIRECT_URI: 'http://localhost:3000/api/auth/microsoft/callback',
+  AZURE_REDIRECT_URI: 'https://partner-storage.infra.sunlighten.com/api/auth/microsoft/callback',
 };
 
 let cachedConfig: RuntimeEnvConfig | null = null;
