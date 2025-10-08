@@ -194,6 +194,7 @@ function getRuntimeConfig(): RuntimeEnvConfig {
                                   process.env.AMPLIFY_SECRET_AZURE_REDIRECT_URI;
   }
 
+
   // Choose appropriate fallback values
   const fallbackConfig = isDevelopment() ? DEVELOPMENT_FALLBACKS : PRODUCTION_FALLBACKS;
 

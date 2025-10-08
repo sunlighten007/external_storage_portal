@@ -29,6 +29,7 @@ export function Login() {
     setMicrosoftLoading(true);
     try {
       const authUrl = await getMicrosoftAuthUrl();
+
       window.location.href = authUrl;
     } catch (error) {
       console.error('Error initiating Microsoft login:', error);

@@ -31,6 +31,7 @@ export const microsoftAuth = validatedAction(microsoftAuthSchema, async (data) =
         error: 'Access denied. Only users with @sunlighten.com email addresses are allowed.',
       };
     }
+    console.log('???1')
 
     // Check if user exists in our database
     const existingUser = await db
@@ -38,6 +39,7 @@ export const microsoftAuth = validatedAction(microsoftAuthSchema, async (data) =
       .from(users)
       .where(eq(users.email, microsoftUser.mail))
       .limit(1);
+      console.log('???2')
 
     if (existingUser.length === 0) {
       return {
@@ -89,6 +91,7 @@ export const microsoftAuth = validatedAction(microsoftAuthSchema, async (data) =
     // Redirect to dashboard
     redirect('/dashboard');
   } catch (error) {
+    console.log('???3')
     console.error('Microsoft authentication error:', error);
     return {
       error: 'Authentication failed. Please try again.',
@@ -100,8 +103,9 @@ export const microsoftAuth = validatedAction(microsoftAuthSchema, async (data) =
  * Generate Microsoft OAuth2 authorization URL
  */
 export async function getMicrosoftAuthUrl(): Promise<string> {
-  const redirectUri = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/auth/microsoft/callback`;
+  const redirectUri = `${process.env.NEXT_PUBLIC_NEXTAUTH_URL || 'http://localhost:3000'}/api/auth/microsoft/callback`;
   
   const { getMicrosoftAuthUrl: getAuthUrl } = await import('@/lib/auth/microsoft');
-  return await getAuthUrl(redirectUri);
+  const result = await getAuthUrl(redirectUri)
+  return result;
 }
