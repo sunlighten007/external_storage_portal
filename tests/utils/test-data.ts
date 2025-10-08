@@ -16,7 +16,7 @@ export interface TestTeam {
 }
 
 export function getTestUsers(): TestUser[] {
-  const testUsersJson = process.env.NEXT_PUBLIC_TEST_USERS;
+  const testUsersJson = process.env.TEST_USERS;
   if (!testUsersJson) {
     throw new Error('Test users not found. Make sure global setup ran successfully.');
   }
@@ -24,7 +24,7 @@ export function getTestUsers(): TestUser[] {
 }
 
 export function getTestTeams(): TestTeam[] {
-  const testTeamsJson = process.env.NEXT_PUBLIC_TEST_TEAMS;
+  const testTeamsJson = process.env.TEST_TEAMS;
   if (!testTeamsJson) {
     throw new Error('Test teams not found. Make sure global setup ran successfully.');
   }

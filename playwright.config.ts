@@ -8,11 +8,11 @@ export default defineConfig({
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
-  forbidOnly: !!process.env.NEXT_PUBLIC_CI,
+  forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: process.env.NEXT_PUBLIC_CI ? 2 : 0,
+  retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.NEXT_PUBLIC_CI? 1 : undefined,
+  workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['html'],
@@ -81,17 +81,17 @@ export default defineConfig({
   webServer: {
     command: 'USE_LOCAL_S3=true npm run dev',
     url: 'http://localhost:3000',
-    reuseExistingServer: !process.env.NEXT_PUBLIC_CI,
+    reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
     env: {
-      NEXT_UBLIC_DATABASE_URL: 'postgresql://postgres:postgres@localhost:54322/postgres',
-      NEXT_UBLIC_AUTH_SECRET: 'test-secret-key',
-      NEXT_UBLIC_USE_LOCAL_S3: 'true',
-      NEXT_UBLIC_S3_ACCESS_KEY_ID: 'test',
-      NEXT_UBLIC_S3_SECRET_ACCESS_KEY: 'test',
-      NEXT_UBLIC_S3_REGION: 'us-east-1',
-      NEXT_UBLIC_S3_BUCKET: 'test-bucket',
-      NEXT_UBLIC_S3_ENDPOINT: 'http://localhost:4566',
+      DATABASE_URL: 'postgresql://postgres:postgres@localhost:54322/postgres',
+      AUTH_SECRET: 'test-secret-key',
+      USE_LOCAL_S3: 'true',
+      S3_ACCESS_KEY_ID: 'test',
+      S3_SECRET_ACCESS_KEY: 'test',
+      S3_REGION: 'us-east-1',
+      S3_BUCKET: 'test-bucket',
+      S3_ENDPOINT: 'http://localhost:4566',
     },
   },
 
