@@ -8,4 +8,8 @@ RUN npm install
 
 COPY . .
 
-CMD ["npm", "run", "build:prod"]
+# Build the application
+RUN npm run build:prod
+
+# Start the production server
+CMD ["npm", "run", "start:prod"]
